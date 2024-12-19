@@ -1,0 +1,15 @@
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\bin\Debug\net8.0\CommerceDAL.deps.json
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\bin\Debug\net8.0\CommerceDAL.runtimeconfig.json
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\bin\Debug\net8.0\CommerceDAL.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\bin\Debug\net8.0\CommerceDAL.pdb
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.AssemblyInfoInputs.cache
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.AssemblyInfo.cs
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.sourcelink.json
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\refint\CommerceDAL.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.pdb
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\CommerceDAL.genruntimeconfig.cache
+C:\Users\admin\source\repos\CommerceSystem\CommerceDAL\obj\Debug\net8.0\ref\CommerceDAL.dll

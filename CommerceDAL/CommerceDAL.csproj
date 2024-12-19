@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="DAO\" />
-    <Folder Include="Repository\Implementation\" />
   </ItemGroup>
 
 </Project>
