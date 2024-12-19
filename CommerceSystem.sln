@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceDAL", "CommerceDAL\CommerceDAL.csproj", "{A1D61CE2-171F-4C3E-9D8B-3844E65449BC}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1D61CE2-171F-4C3E-9D8B-3844E65449BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D61CE2-171F-4C3E-9D8B-3844E65449BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D61CE2-171F-4C3E-9D8B-3844E65449BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D61CE2-171F-4C3E-9D8B-3844E65449BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
