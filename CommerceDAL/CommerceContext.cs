@@ -50,7 +50,11 @@ namespace CommerceDAL
                 entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+                entity.Property(e => e.Timer)
+                .IsRowVersion()
+                .IsConcurrencyToken();
                 entity.HasIndex(e => e.Email).IsUnique();
+
             });
             modelBuilder.Entity<Stocks>(entity => 
             {
@@ -58,6 +62,9 @@ namespace CommerceDAL
                 entity.Property(e => e.Quanity)
                 .HasColumnType("int")
                 .IsRequired();
+                entity.Property(e => e.Timer)
+                .IsRowVersion()
+                .IsConcurrencyToken();
 
                 entity.HasOne(d => d.Product).WithMany(p => p.Stocks)
                 .HasForeignKey(d => d.ProductId)
@@ -65,6 +72,36 @@ namespace CommerceDAL
                 .HasConstraintName("FK_ProductInStock");
 
             });
+            modelBuilder.Entity<Orders>(entity => 
+            {
+                entity.HasKey(e => e.Id).HasName("PK_Orders");
+                entity.Property(e => e.OrderStatus)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+                entity.Property(e => e.Date).HasColumnType("smalldatetime");
+                entity.Property(e => e.Timer)
+               .IsRowVersion()
+               .IsConcurrencyToken();
+
+                entity.HasOne(o => o.Users).WithMany(u => u.UsersOrders)
+                .HasForeignKey(o => o.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UsersHasOrders");
+
+                entity.HasOne(o => o.Product).WithMany(p => p.ProductOrders)
+                .HasForeignKey(o => o.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductHasOrders");
+
+                entity.HasOne(o => o.Stocks).WithMany(P => P.StocksOrders)
+                .HasForeignKey(o => o.StockId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StocksHasOrders");
+
+            });
+
+
         }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

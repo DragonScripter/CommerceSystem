@@ -14,5 +14,6 @@ namespace CommerceDAL.Entities
         public decimal Price { get; set; }
 
         public ICollection<Stocks> Stocks { get; set; } = new List<Stocks>();
+        public ICollection<Orders> ProductOrders { get; set; } = new List<Orders>();
     }
 }
