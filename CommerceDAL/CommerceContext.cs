@@ -28,14 +28,15 @@ namespace CommerceDAL
                 .HasMaxLength(50)
                 .IsUnicode(false);
                 entity.Property(e => e.Description)
-               .HasMaxLength(250)
+               .HasMaxLength(1000)
                .IsUnicode(false);
                 entity.Property(e => e.Price)
-               .HasColumnType("decimal(18,2)")
+               .HasPrecision(18,2)
                .IsRequired();
                 entity.Property(e => e.Timer)
                .IsRowVersion()
                .IsConcurrencyToken();
+               entity.HasIndex(e => e.Name).IsUnique();
             });
         }
     }
