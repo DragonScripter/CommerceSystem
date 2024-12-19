@@ -1,7 +1,7 @@
---Commerce System
---A project to mimic real world purchases and transactions.
+--Commerce System <br>
+--A project to mimic real world purchases and transactions. <br>
 
---Planned Features
+<br>--Planned Features
   -- User Authentication
   -- Product Management
   -- Shopping Cart Functionality
