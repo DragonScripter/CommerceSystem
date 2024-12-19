@@ -52,6 +52,19 @@ namespace CommerceDAL
                 .IsUnicode(false);
                 entity.HasIndex(e => e.Email).IsUnique();
             });
+            modelBuilder.Entity<Stocks>(entity => 
+            {
+                entity.HasKey(e => e.Id).HasName("PK_Stocks");
+                entity.Property(e => e.Quanity)
+                .HasColumnType("int")
+                .IsRequired();
+
+                entity.HasOne(d => d.Product).WithMany(p => p.Stocks)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductInStock");
+
+            });
         }
     }
 }
