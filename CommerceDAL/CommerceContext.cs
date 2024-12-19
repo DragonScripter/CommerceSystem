@@ -38,6 +38,20 @@ namespace CommerceDAL
                .IsConcurrencyToken();
                entity.HasIndex(e => e.Name).IsUnique();
             });
+            modelBuilder.Entity<Users>(entity => 
+            {
+                entity.HasKey(e => e.Id).HasName("PK_Users");
+                entity.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+                entity.Property(e => e.LastName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+                entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
         }
     }
 }
