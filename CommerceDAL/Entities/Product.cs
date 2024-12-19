@@ -10,7 +10,6 @@ namespace CommerceDAL.Entities
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public int Quanity { get; set; }
         public decimal Price { get; set; }
     }
 }
