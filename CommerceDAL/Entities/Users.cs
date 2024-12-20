@@ -12,6 +12,6 @@ namespace CommerceDAL.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public ICollection<Orders> UsersOrders { get; set; } = new List<Orders>();
+        public virtual ICollection<Orders> UsersOrders { get; set; } = new List<Orders>();
     }
 }

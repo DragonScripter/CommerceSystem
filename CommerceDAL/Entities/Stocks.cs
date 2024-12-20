@@ -13,6 +13,6 @@ namespace CommerceDAL.Entities
 
         public virtual Product Product { get; set; }
 
-        public ICollection<Orders> StocksOrders { get; set; } = new List<Orders>();
+        public virtual ICollection<Orders> StocksOrders { get; set; } = new List<Orders>();
     }
 }
