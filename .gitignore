@@ -43,3 +43,54 @@ publish/
 
 # Optional: Ignore your test folder if it's not meant for pushing
 tests/
+
+# ASP.NET Core
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+*.user
+*.userosscache
+*.suo
+*.appx
+*.appxbundle
+*.msi
+*.cab
+*.dll
+*.pdb
+*.cache
+
+# ASP.NET Core Development Environment
+appsettings.Development.json
+
+# Vue
+node_modules/
+dist/
+public/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# NPM Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local Environment Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# VSCode
+.vscode/
+
+# JetBrains
+.idea/
+
+# Logs
+logs/
+*.log
