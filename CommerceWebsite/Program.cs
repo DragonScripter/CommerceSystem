@@ -21,6 +21,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAll"); // Enable CORS for all controllers
+
+app.UseRouting();
 
 app.UseHttpsRedirection();
 
