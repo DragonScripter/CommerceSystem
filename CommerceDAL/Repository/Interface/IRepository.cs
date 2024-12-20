@@ -11,9 +11,9 @@ namespace CommerceDAL.Repository.Interface
     {
         Task<List<T>> GetAll();
         Task<List<T>> GetSome(Expression<Func<T, bool>> match);
-        Task<List<T?>> GetOne(Expression<Func<T, bool>> match);
+        Task<T?> GetOne(Expression<Func<T, bool>> match);
         Task<T> Add(T entity);
-        Task<Update> Update(T entity); 
+        Task<UpdateStatus> Update(T entity); 
         Task<int> Delete(int i);
     }
 }

@@ -10,6 +10,10 @@ namespace CommerceDAL
 {
     public partial class CommerceContext : DbContext
     {
+        public CommerceContext()
+        {
+        }
+
         public CommerceContext(DbContextOptions<CommerceContext> options) : base(options) 
         {
         }

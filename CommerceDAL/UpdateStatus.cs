@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommerceDAL
 {
-    public enum Update
+    public enum UpdateStatus
     {
         Ok = 1,
         Failed = -1,
