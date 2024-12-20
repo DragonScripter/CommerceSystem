@@ -89,3 +89,9 @@ C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\obj\Debug\net8.0\refi
 C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\obj\Debug\net8.0\CommerceWebsite.pdb
 C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\obj\Debug\net8.0\CommerceWebsite.genruntimeconfig.cache
 C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\obj\Debug\net8.0\ref\CommerceWebsite.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\admin\source\repos\CommerceSystem\CommerceWebsite\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
