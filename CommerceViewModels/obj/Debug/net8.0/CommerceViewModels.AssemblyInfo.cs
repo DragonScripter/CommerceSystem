@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CommerceViewModels")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0292f654628fe78878a8d88c952f48e652d191d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8584e0c17b513f02d6609fe383e7065964d293bd")]
 [assembly: System.Reflection.AssemblyProductAttribute("CommerceViewModels")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CommerceViewModels")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
