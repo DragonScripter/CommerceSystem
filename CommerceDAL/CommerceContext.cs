@@ -20,6 +20,16 @@ namespace CommerceDAL
         public virtual DbSet<Stocks> Stocks { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<Product>(entity => 
