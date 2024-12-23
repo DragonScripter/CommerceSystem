@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 
 namespace CommerceDAL
 {
-    public partial class CommerceContext : DbContext
+    public class CommerceContext : DbContext
     {
-        public CommerceContext()
-        {
-        }
-
         public CommerceContext(DbContextOptions<CommerceContext> options) : base(options) 
         {
         }
@@ -22,6 +18,8 @@ namespace CommerceDAL
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Stocks> Stocks { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
@@ -41,7 +39,9 @@ namespace CommerceDAL
                 entity.Property(e => e.Timer)
                .IsRowVersion()
                .IsConcurrencyToken();
-               entity.HasIndex(e => e.Name).IsUnique();
+                entity.Property(e => e.ImageData)
+                .HasColumnType("varbinary(max)");
+                entity.HasIndex(e => e.Name).IsUnique();
             });
             modelBuilder.Entity<Users>(entity => 
             {
@@ -107,6 +107,5 @@ namespace CommerceDAL
 
 
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
