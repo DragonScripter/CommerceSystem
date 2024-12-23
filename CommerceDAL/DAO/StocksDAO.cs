@@ -14,11 +14,10 @@ namespace CommerceDAL.DAO
     public class StocksDAO
     {
         readonly IRepository<Stocks> _repo;
-        public StocksDAO()
+        public StocksDAO(IRepository<Stocks> repo)
         {
-            _repo = new CommerceRepository<Stocks>();
+            _repo = repo;
         }
-
         public async Task<Stocks> GetById(int id) 
         {
             Stocks stock;

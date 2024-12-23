@@ -14,11 +14,10 @@ namespace CommerceDAL.DAO
     public class ProductDAO
     {
         readonly IRepository<Product> _repo;
-        public ProductDAO()
+        public ProductDAO(IRepository<Product> repo)
         {
-            _repo = new CommerceRepository<Product>();
+            _repo = repo; 
         }
-
         public async Task<List<Product>> GetAll() 
         {
             List<Product> allProducts = new();

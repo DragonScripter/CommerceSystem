@@ -12,9 +12,9 @@ namespace CommerceDAL.DAO
     public class UserDAO
     {
         readonly IRepository<Users> _repo;
-        public UserDAO() 
+        public UserDAO(IRepository<Users> repo)
         {
-            _repo = new CommerceRepository<Users>();
+            _repo = repo;
         }
         //need to do repository implementations
     }
