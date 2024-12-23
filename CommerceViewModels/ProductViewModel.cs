@@ -1,5 +1,6 @@
 ﻿using CommerceDAL.DAO;
 using CommerceDAL.Entities;
+using CommerceDAL.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +23,11 @@ namespace CommerceViewModels
         public string? ImageUrl { get; set; }
         public string? Timer {  get; set; }
 
+        public ProductViewModel(ProductDAO pDAO, StocksDAO sDAO)
+        {
+            _pDAO = pDAO;
+            _sDAO = sDAO;
+        }
 
         public async Task<int> GetProductAmount(int id) 
         {
