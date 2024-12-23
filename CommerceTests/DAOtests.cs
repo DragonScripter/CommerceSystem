@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.InMemory;
 using CommerceDAL.DAO;
 using CommerceDAL;
 using CommerceDAL.Entities;
+using CommerceDAL.Repository.Implementation;
+using CommerceDAL.Repository.Interface;
 namespace CommerceTests
 {
     public class DAOtests
@@ -19,6 +21,9 @@ namespace CommerceTests
             // in mem database
             services.AddDbContext<CommerceContext>(options =>
                 options.UseInMemoryDatabase("TestCommerceDb"));
+
+            services.AddScoped<IRepository<Product>, CommerceRepository<Product>>();
+            services.AddScoped<IRepository<Stocks>, CommerceRepository<Stocks>>();
 
             // just adding them to service
             services.AddScoped<ProductDAO>();
@@ -46,7 +51,8 @@ namespace CommerceTests
                 Name = "Product 1",
                 Description = "Sample product description",
                 Price = 100,
-                Timer = new byte[] { 1, 2, 3 }
+                Timer = new byte[] { 1, 2, 3 },
+                ImageData = new byte[] { }
             });
 
             context.Stocks.AddRange(new Stocks
