@@ -32,7 +32,7 @@ namespace CommerceViewModels
         public async Task<int> GetProductAmount(int id) 
         {
             var amount = await _sDAO.GetById(id);
-            return amount.Quanity;
+            return amount?.Quanity ?? 0;
         }
 
         public async Task<List<ProductViewModel>> GetAll()
@@ -43,7 +43,7 @@ namespace CommerceViewModels
                 List<Product> allProducts = await _pDAO.GetAll();
                 foreach (Product product in allProducts) 
                 {
-                    ProductViewModel vm = new() 
+                    ProductViewModel vm = new ProductViewModel(_pDAO, _sDAO)
                     {
                         Id = product.Id,
                         Name = product.Name,

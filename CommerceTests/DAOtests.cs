@@ -36,7 +36,7 @@ namespace CommerceTests
             _pDAO = serviceProvider.GetRequiredService<ProductDAO>();
             _sDAO = serviceProvider.GetRequiredService<StocksDAO>();
 
-            // Seedind
+            // Seeding
             SeedDatabase(serviceProvider);
         }
 
