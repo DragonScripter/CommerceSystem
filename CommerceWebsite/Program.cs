@@ -4,6 +4,7 @@ using CommerceDAL.Entities;
 using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
 using CommerceViewModels;
+using CommerceWebsite.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,9 +24,9 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
         });
     });
-//builder.Services.AddRepositories();
-//builder.Services.AddDAOs();
-//builder.Services.AddViewModels();
+builder.Services.AddRepositories();
+builder.Services.AddDAOs();
+builder.Services.AddViewModels();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
