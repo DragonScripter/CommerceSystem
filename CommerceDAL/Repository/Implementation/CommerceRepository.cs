@@ -15,9 +15,9 @@ namespace CommerceDAL.Repository.Implementation
     public class CommerceRepository<T> : IRepository<T> where T : CommerceEntity
     {
         readonly private CommerceContext _db;
-        public CommerceRepository() 
+        public CommerceRepository(CommerceContext db)
         {
-            _db = new CommerceContext();
+            _db = db;
         }
         public async Task<List<T>> GetAll()
         {
