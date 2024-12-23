@@ -11,10 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<CommerceContext>(options =>
-        options.UseSqlServer("Server=(localdb)\\ProjectModels;Database=CommerceDb;Trusted_Connection=True;"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAll", policy =>
