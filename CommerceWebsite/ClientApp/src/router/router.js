@@ -1,17 +1,16 @@
 ﻿import { createRouter, createWebHistory } from 'vue-router';
-
-import HomePage from '@/components/ProductDisplay.vue'; // Your components
+import HomePage from '@/components/ProductDisplay.vue'; 
 
 const routes = [
     {
-        path: '/',
+        path: '/home', 
         name: 'Home',
         component: HomePage,
     },
 ];
 
 const router = createRouter({
-    history: createWebHistory(), // Enables HTML5 history mode
+    history: createWebHistory(),
     routes,
 });
 
