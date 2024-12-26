@@ -1,11 +1,17 @@
 <template>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <ProductDisplay />
     <router-view></router-view>
 </template>
 
 <script>
+    import ProductDisplay from './components/ProductDisplay.vue';
     export default {
         name: 'App',
-    };
+        components: {
+            ProductDisplay
+        }
+    }
 </script>
 
 <style>
