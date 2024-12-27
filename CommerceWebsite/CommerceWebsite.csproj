@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="clientapp\.eslintrc.cjs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="clientapp\.eslintrc.cjs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
