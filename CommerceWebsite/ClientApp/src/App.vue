@@ -1,15 +1,17 @@
 <template>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <ProductDisplay />
-    <router-view></router-view>
+    <div id="app">
+        <img alt="Vue logo" src="./assets/logo.png">
+        <HelloWorld />
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-    import ProductDisplay from './components/ProductDisplay.vue';
+    import HelloWorld from './components/HelloWorld.vue';
     export default {
         name: 'App',
         components: {
-            ProductDisplay
+            HelloWorld
         }
     }
 </script>

@@ -8,19 +8,29 @@
 </template>
 
 
-<script>
-    export default {
-        name: "ProductList",
+<script lang="ts">
+    import { defineComponent } from "vue";
+
+    interface Product {
+        id: number;
+        name: string;
+        descrption: string;
+        price: number;
+        
+    }
+
+    export default defineComponent({
+        name: "ProductPage",
         data() {
             return {
-                products: [],
+                products: [] as Product[],
             };
         },
         mounted() {
             this.fetchProducts();
         },
         methods: {
-            async fetchProducts() {
+            async fetchProducts(): Promise<void> {
                 try {
                     const response = await fetch("https://localhost:7112/api/Product");
                     if (response.ok) {
@@ -33,8 +43,9 @@
                 }
             },
         },
-    };
+    });
 </script>
+\
 
 <style scoped>
     h1 {
