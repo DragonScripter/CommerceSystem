@@ -1,23 +1,23 @@
-﻿import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../components/HelloWorld.vue';
-import ProductPage from '../components/ProductDisplay.vue'; 
-import CartPage from '../components/Cart.vue'; 
+﻿import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import Home from '../components/HelloWorld.vue';
+import Product from '../components/ProductDisplay.vue'; 
+import Cart from '../components/Cart.vue'; 
 
-const routes = [
+const routes : RouteRecordRaw[] = [
     {
         path: '/', 
         name: 'Home',
-        component: HomePage,
+        component: Home,
     },
     {
         path: '/products',
         name: 'Product',
-        component : ProductPage,
+        component : Product,
     },
     {
         path: '/cart',
         name: 'Cart',
-        component: CartPage,
+        component: Cart,
     }
 ];
 
