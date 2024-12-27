@@ -1,5 +1,24 @@
 {
-  "files": [],
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [ "src/*" ]
+    },
+    "types": [
+      "vite/client",
+      "vue-router"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json",

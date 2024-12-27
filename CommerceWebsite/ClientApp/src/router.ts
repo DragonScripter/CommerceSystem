@@ -1,7 +1,7 @@
 ﻿import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import Home from '../components/HelloWorld.vue';
-import Product from '../components/ProductDisplay.vue'; 
-import Cart from '../components/Cart.vue'; 
+import Home from './components/HelloWorld.vue';
+import Product from './components/ProductDisplay.vue'; 
+import Cart from './components/Cart.vue'; 
 
 const routes : RouteRecordRaw[] = [
     {

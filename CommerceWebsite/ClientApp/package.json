@@ -21,11 +21,13 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@types/vue": "^1.0.31",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-plugin-typescript": "^4.0.5",
     "@vue/cli-service": "^3.3.1",
+    "@vue/runtime-core": "^3.5.13",
     "cache-loader": "^1.2.5",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
