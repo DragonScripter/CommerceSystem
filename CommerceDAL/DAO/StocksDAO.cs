@@ -33,5 +33,20 @@ namespace CommerceDAL.DAO
             }
             return stock!;
         }
+        public async Task<UpdateStatus> Update(Stocks stock)
+        {
+            UpdateStatus stockUpdated;
+            try
+            {
+                stockUpdated = await _repo.Update(stock);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + ex.Message +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return stockUpdated;
+        }
     }
 }
