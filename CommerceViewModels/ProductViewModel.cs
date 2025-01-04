@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CommerceViewModels
 {
@@ -34,6 +35,12 @@ namespace CommerceViewModels
             var amount = await _sDAO.GetById(id);
             return amount?.Quanity ?? 0;
         }
+        public async Task<Stocks> GetStock(int id)
+        {
+            var amount = await _sDAO.GetById(id);
+            return amount;
+        }
+
 
         public async Task<List<ProductViewModel>> GetAll()
         {
@@ -66,6 +73,60 @@ namespace CommerceViewModels
                 throw;
             }
             return allProductsVm;
+        }
+        //going to make it to a transaction
+        public async Task<int> Update() 
+        {
+            int update;
+            int update2;
+            try
+            {
+                Product product = new()
+                {
+                    Id = Id,
+                    Name = Name!,
+                    Description = Description,
+                    Price = Price,
+                    Timer = Timer != null ? Convert.FromBase64String(Timer) : null
+
+                };
+                if (product.ImageData != null)
+                {
+                    ImageUrl = Convert.ToBase64String(product.ImageData);
+                }
+                var stock = await GetStock(Id);
+                if (stock != null) 
+                {
+                    stock.Quanity = Amount;
+                }
+                // going to add this later on for adding stock if product doesnt have any
+                //else 
+                //{
+                //    stock = new Stocks
+                //    {
+                //        ProductId = product.Id,
+                //        Quantity = Amount
+                //    };
+                    
+                //    await _sDAO.AddStock(stock); 
+                //}
+
+
+
+                update = (int)await _pDAO.Update(product);
+                update2 = (int)await _sDAO.Update(stock);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            if (update == 1 && update2 == 1) 
+            {
+                return update;
+            }
+           
         }
     }
 }
