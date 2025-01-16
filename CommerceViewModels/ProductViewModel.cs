@@ -137,7 +137,7 @@ namespace CommerceViewModels
         //    }
 
         //}
-        public async Task<int> UpdateAsync()
+        public async Task<int> Update()
         {
             int productUpdateResult = 0;
             int stockUpdateResult = 0;

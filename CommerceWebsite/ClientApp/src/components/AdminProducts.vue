@@ -33,6 +33,7 @@
         name: string;
         descrption: string;
         price: number;
+        image: string;
 
     }
 
@@ -57,6 +58,46 @@
                     }
                 } catch (error) {
                     console.error("Error fetching data", error);
+                }
+            },
+            async uploadImage(event: Event, productId: number): Promise<void> {
+                const target = event.target as HTMLInputElement;
+                const file = target.files?.[0];
+                if (!file) return;
+
+                try {
+                  
+                    if (!file.type.startsWith("image/")) {
+                        alert("Please upload a valid image file.");
+                        return;
+                    }
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert("File size must not exceed 5MB.");
+                        return;
+                    }
+
+                   
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    formData.append("productId", productId.toString());
+
+                   
+                    const response = await fetch(`https://localhost:7112/api/Product/${productId}/UploadImage`, {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        console.log("Image uploaded successfully!");
+                        await this.fetchProducts(); 
+                        alert("Image uploaded successfully!");
+                    } else {
+                        console.error("Failed to upload image.");
+                        alert("Failed to upload image. Please try again.");
+                    }
+                } catch (error) {
+                    console.error("Error uploading image", error);
+                    alert("An error occurred while uploading the image.");
                 }
             },
         },
