@@ -12,7 +12,7 @@ namespace CommerceDAL.Entities
         public string Name { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
-        public byte[] ImageData { get; set; }
+        public string? ImageData { get; set; }
 
         public virtual ICollection<Stocks> Stocks { get; set; } = new List<Stocks>();
         public virtual ICollection<Orders> ProductOrders { get; set; } = new List<Orders>();

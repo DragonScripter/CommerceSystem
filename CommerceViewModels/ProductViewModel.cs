@@ -68,21 +68,28 @@ namespace CommerceViewModels
                         Amount = await GetProductAmount(product.Id),
                         Timer = Convert.ToBase64String(product.Timer!),
                     };
+
+                    
                     if (product.ImageData != null)
                     {
-                        ImageUrl = Convert.ToBase64String(product.ImageData);
+                        
+                        vm.ImageUrl = $"/images/{product.Id}.jpg";  
+
+                       
+                        // vm.ImageUrl = Convert.ToBase64String(product.ImageData); 
                     }
+
                     allProductsVm.Add(vm);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Problem in " + GetType().Name + " " +
-                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
-                throw;
+                // Handle error (optional)
+                Console.WriteLine(ex.Message);
             }
             return allProductsVm;
         }
+
         //going to make it to a transaction
         //public async Task<int> Update() 
         //{
@@ -155,13 +162,6 @@ namespace CommerceViewModels
                         Price = Price,
                         Timer = Timer != null ? Convert.FromBase64String(Timer) : null
                     };
-
-             
-                    if (product.ImageData != null)
-                    {
-                        ImageUrl = Convert.ToBase64String(product.ImageData);
-                    }
-
                    
                     var stock = await GetStock(Id);
                     if (stock != null)

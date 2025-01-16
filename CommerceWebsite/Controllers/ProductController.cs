@@ -16,11 +16,11 @@ namespace CommerceWebsite.Controllers
         private readonly StocksDAO _sDAO;
         private readonly CommerceContext _context;
 
-        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO)
-        {
-            _pDAO = productDAO;
-            _sDAO = stocksDAO;
-        }
+        //public ProductController(ProductDAO productDAO, StocksDAO stocksDAO)
+        //{
+        //    _pDAO = productDAO;
+        //    _sDAO = stocksDAO;
+        //}
         public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, CommerceContext context)
         {
             _pDAO = productDAO;
@@ -69,7 +69,7 @@ namespace CommerceWebsite.Controllers
                         return NotFound("Product not found.");
                     }
 
-                    product.ImageData = imageData; 
+                    product.ImageData = imageUrl; 
              
 
 

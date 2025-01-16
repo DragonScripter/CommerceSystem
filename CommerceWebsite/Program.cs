@@ -45,6 +45,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll"); // Enable CORS for all controllers
 
 app.UseRouting();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
