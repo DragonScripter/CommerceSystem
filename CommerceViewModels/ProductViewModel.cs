@@ -207,5 +207,26 @@ namespace CommerceViewModels
                 throw; 
             }
         }
+        public async Task Add() 
+        {
+            Id = -1;
+            try
+            {
+                Product product = new()
+                {
+                    Name = Name ?? throw new ArgumentNullException(nameof(Name), "Product name cannot be null."),
+                    Description = Description,
+                    Price = Price,
+                    ImageData = ImageUrl != null ? Convert.FromBase64String(ImageUrl!) : null
+                };
+                Id = await _pDAO.Add(product);
+            }
+            //need to create a stock DAO Method for adding stock corresponding to products
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+        }
     }
 }
