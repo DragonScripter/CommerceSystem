@@ -6,7 +6,7 @@
         <h2>Manage Existing Products</h2>
         <div class="container">
             <div v-for="product in products" :key="product.id" class="product-item">
-                <img :src="'http://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
+                <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
 
 
                 <h3>{{ product.name }}</h3>
