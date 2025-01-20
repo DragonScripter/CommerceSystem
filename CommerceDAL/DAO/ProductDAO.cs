@@ -48,5 +48,18 @@ namespace CommerceDAL.DAO
             }
             return productUpdated;
         }
+        public async Task<int> Add(Product product) 
+        {
+            try
+            {
+                await _repo.Add(product);
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return product.Id;
+        }
     }
 }
