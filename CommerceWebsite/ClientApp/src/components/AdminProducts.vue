@@ -167,4 +167,10 @@
         .upload-btn input[type="file"] {
             display: none;
         }
+    .product-item img {
+        width: 50px; 
+        height: 50px; 
+        object-fit: cover; 
+    }
+
 </style>
