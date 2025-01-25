@@ -220,8 +220,18 @@ namespace CommerceViewModels
                     ImageData = ImageUrl != null ? Convert.FromBase64String(ImageUrl!) : null
                 };
                 Id = await _pDAO.Add(product);
+                if (Id != -1)
+                {
+                    Stocks stock = new()
+                    {
+                        ProductId = Id, 
+                        Quanity = Amount    
+                    };
+
+                 
+                    await _sDAO.Add(stock); 
+                }
             }
-            //need to create a stock DAO Method for adding stock corresponding to products
             catch (Exception ex) 
             {
                 Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
