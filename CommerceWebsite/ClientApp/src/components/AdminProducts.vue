@@ -240,12 +240,57 @@
         align-items: center;
     }
 
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
     .modal-content {
         background-color: white;
         padding: 20px;
-        border-radius: 5px;
+        border-radius: 8px;
+        width: 80%; 
         max-width: 500px;
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px; 
+    }
+
+       
+        .modal-content h3 {
+            margin: 0 0 15px;
+        }
+
+    
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; 
+        }
+
+        
+        .modal-content .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px; 
+        }
+
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
     }
 
 
