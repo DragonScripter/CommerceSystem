@@ -60,7 +60,6 @@ namespace CommerceWebsite.Controllers
                     var imageData = stream.ToArray();  
 
                     
-                    string imageUrl = SaveImage(imageData); 
 
               
                     var product = await _context.Product.FindAsync(productId);
@@ -69,7 +68,7 @@ namespace CommerceWebsite.Controllers
                         return NotFound("Product not found.");
                     }
 
-                    product.ImageData = imageUrl; 
+                    product.ImageData = imageData; 
              
 
 

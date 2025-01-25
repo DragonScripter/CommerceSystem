@@ -4,6 +4,31 @@
     <div>
         <h1>Admin Panel</h1>
         <h2>Manage Existing Products</h2>
+        <h2>Add New Product</h2>
+        <div class="button-container">
+            <button @click="showAddProductModal = true">Add</button>
+        </div>
+        <div v-if="showAddProductModal" class="modal">
+            <div class="modal-content">
+                <h3>Add New Product</h3>
+                <form @submit.prevent="addProduct">
+                    <label for="name">Product Name</label>
+                    <input type="text" id="name" v-model="newProduct.name" />
+
+                    <label for="description">Description</label>
+                    <input type="text" id="description" v-model="newProduct.description" />
+
+                    <label for="price">Price</label>
+                    <input type="number" id="price" v-model="newProduct.price" />
+
+                    <label for="price">Amount</label>
+                    <input type="number" id="price" v-model="newProduct.amount" />
+
+                    <button type="submit">Add Product</button>
+                    <button type="button" @click="showAddProductModal = false">Cancel</button>
+                </form>
+            </div>
+        </div>
         <div class="container">
             <div v-for="product in products" :key="product.id" class="product-item">
                 <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
@@ -20,10 +45,10 @@
                         <input type="file" @change="uploadImage($event, product.id)" hidden />
                     </label>
                 </div>
-            </div>
-        </div>
 
-        <h2>Add New Product</h2>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -172,5 +197,43 @@
         height: 50px; 
         object-fit: cover; 
     }
+    .button-container {
+        margin-bottom: 20px;
+    }
+
+    button {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        width: 100%;
+    }
+
 
 </style>
