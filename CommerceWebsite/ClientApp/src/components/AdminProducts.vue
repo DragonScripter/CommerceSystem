@@ -133,6 +133,9 @@
                     alert("An error occurred while uploading the image.");
                 }
             },
+            openAddProductModal() {
+                this.showAddProductModal = true; 
+            },
         },
     });
 </script>
