@@ -8,7 +8,6 @@
         <div class="button-container">
             <button @click="showAddProductModal = true">Add</button>
         </div>
-        <!-- Modal -->
         <div v-if="showAddProductModal" class="modal">
             <div class="modal-content">
                 <h3>Add New Product</h3>
@@ -18,6 +17,9 @@
 
                     <label for="description">Description</label>
                     <input type="text" id="description" v-model="newProduct.description" />
+
+                    <label for="price">Amount</label>
+                    <input type="number" id="amount" v-model="newProduct.amount" />
 
                     <label for="price">Price</label>
                     <input type="number" id="price" v-model="newProduct.price" />
