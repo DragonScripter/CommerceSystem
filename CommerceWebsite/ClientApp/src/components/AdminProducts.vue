@@ -71,6 +71,7 @@
                 newProduct: {
                     name: "",
                     description: "",
+                    amount: 0,
                     price: 0,
                 } as Omit<Product, 'id' | 'imageUrl'>, 
             };
@@ -135,6 +136,10 @@
             },
             openAddProductModal() {
                 this.showAddProductModal = true; 
+            },
+            closeAddProductModal() {
+                this.showAddProductModal = false; 
+                this.newProduct = { name: "", description: "", amount:0, price: 0 }; 
             },
         },
     });
