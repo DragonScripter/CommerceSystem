@@ -8,6 +8,7 @@
         <div class="button-container">
             <button @click="showAddProductModal = true">Add</button>
         </div>
+        <!-- Modal -->
         <div v-if="showAddProductModal" class="modal">
             <div class="modal-content">
                 <h3>Add New Product</h3>
@@ -21,14 +22,12 @@
                     <label for="price">Price</label>
                     <input type="number" id="price" v-model="newProduct.price" />
 
-                    <label for="price">Amount</label>
-                    <input type="number" id="price" v-model="newProduct.amount" />
-
                     <button type="submit">Add Product</button>
                     <button type="button" @click="showAddProductModal = false">Cancel</button>
                 </form>
             </div>
         </div>
+
         <div class="container">
             <div v-for="product in products" :key="product.id" class="product-item">
                 <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
@@ -68,6 +67,12 @@
         data() {
             return {
                 products: [] as Product[],
+                showAddProductModal: false, 
+                newProduct: {
+                    name: "",
+                    description: "",
+                    price: 0,
+                } as Omit<Product, 'id' | 'imageUrl'>, 
             };
         },
         mounted() {
