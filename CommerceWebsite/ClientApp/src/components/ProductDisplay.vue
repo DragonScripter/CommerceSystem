@@ -1,4 +1,24 @@
 <template>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/products">
+                <img src="https://localhost:7112/images/logo.png" alt="Magento icon by Icons8"/>
+            </a>
+        </div>
+        <div class="nav-center">
+            <input
+                   v-model="searchQ"
+                   type="text"
+                   placeholder="search for products"
+                   class="search-bar"
+                   @keyup.enter="search"
+                   />
+        </div>
+        <div class="nav-right">
+            <a href="/cart">Cart</a>
+            <a href="/">Orders</a>
+            <a href="/">Account</a>
+        </div>
     <div>
         <h1>Product List</h1>
         <div class="container">
@@ -12,6 +32,7 @@
             </div>
         </div>
        </div>
+    </nav>
 </template>
 
 
@@ -99,4 +120,5 @@
         gap: 20px;
         justify-content: space-evenly;
     }
+
 </style>
