@@ -4,6 +4,7 @@ import Product from './components/ProductDisplay.vue';
 import Cart from './components/Cart.vue';
 import AdminP from './components/AdminProducts.vue';
 import Dashboard from './components/Dashboard.vue';
+import ProductDetail from './components/ProductDetail.vue';
 const routes : RouteRecordRaw[] = [
     {
         path: '/', 
@@ -14,6 +15,12 @@ const routes : RouteRecordRaw[] = [
         path: '/products',
         name: 'Product',
         component : Product,
+    },
+    {
+        path: '/products/:id',
+        name: 'Product-Detail',
+        component: ProductDetail,
+        props: true
     },
     {
         path: '/cart',
