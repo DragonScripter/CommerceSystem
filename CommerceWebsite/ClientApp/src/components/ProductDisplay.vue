@@ -23,10 +23,11 @@
         <div class="container">
             <div class="products">
                 <div v-for="product in products" :key="product.id" class="product-item">
-                    <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
-                    <h2>{{ product.name }}</h2>
-                    <p>{{ product.description }}</p>
-                    <p><strong>Price:</strong> ${{ product.price }}</p>
+                    <router-link :to="'/product/' + product.id">
+                        <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
+                        <h1>{{ product.name }}</h1>
+                        <p><strong>Price:</strong> ${{ product.price }}</p>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -40,7 +41,6 @@
     interface Product {
         id: number;
         name: string;
-        descrption: string;
         price: number;
         
     }

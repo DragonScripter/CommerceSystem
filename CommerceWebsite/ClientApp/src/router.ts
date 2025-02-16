@@ -17,7 +17,7 @@ const routes : RouteRecordRaw[] = [
         component : Product,
     },
     {
-        path: '/products/:id',
+        path: '/product/:id',
         name: 'Product-Detail',
         component: ProductDetail,
         props: true
