@@ -43,6 +43,23 @@ namespace CommerceWebsite.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
             }
         }
+        //need to make the view model method
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByLastname(int id)
+        {
+            try
+            {
+                ProductViewModel viewmodel = new(_pDAO, _sDAO);
+               // await viewmodel.GetById();
+                return Ok(viewmodel);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
+        }
         [HttpPost("{productId}/UploadImage")]
         public async Task<IActionResult> UploadImage(int productId, [FromForm] IFormFile image)
         {
