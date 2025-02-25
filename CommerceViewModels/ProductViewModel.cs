@@ -50,6 +50,11 @@ namespace CommerceViewModels
             return amount;
         }
 
+        public async Task<Product> GetById(int id) 
+        {
+            //Product product = await _pDAO.GetById(id);
+            return product;
+        }
 
         public async Task<List<ProductViewModel>> GetAll()
         {
