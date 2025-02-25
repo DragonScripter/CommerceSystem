@@ -3,7 +3,7 @@
         <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
         <h1>{{ product.name }}</h1>
         <p>{{ product.description }}</p>
-        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p><strong> Price:</strong> ${{ product.price }}</p>
     </div>
     <div v-else>
         <p>Loading...</p>
@@ -30,20 +30,23 @@
         },
         mounted() {
             const route = useRoute();
-            const productId = route.params.id as string;
+            const productId = Number(route.params.id); 
             this.fetchProduct(productId);
         },
         methods: {
-            async fetchProduct(id: string): Promise<void> {
+            async fetchProduct(id: number): Promise<void> {
                 try {
                     const response = await fetch(`https://localhost:7112/api/Product/${id}`);
                     if (response.ok) {
-                        this.product = await response.json();
+                        const productData: Product = await response.json(); 
+                        this.product = productData;
                     } else {
                         console.error("Failed to fetch product");
+                       
                     }
                 } catch (error) {
                     console.error("Error fetching product", error);
+                    
                 }
             },
         },
