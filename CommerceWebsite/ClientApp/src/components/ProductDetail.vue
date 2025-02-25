@@ -38,12 +38,18 @@
 
                 <div class="quantity">
                     <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" v-model="quantity" min="1" max="" />
+                    <input type="number"
+                           id="quantity"
+                           v-model="quantity"
+                           :max="product.Amount"
+                           min="1"
+                           :disabled="product.amount === 0" />
+                    <p v-if="quantity > product.amount" style="color:red;">Not enough stock available</p>
                 </div>
 
                 <div class="buttons">
-                    <button @click="addToCart(product)">Add to Cart</button>
-                    <button @click="buyNow(product)">Buy Now</button>
+                    <button @click="addToCart(product)" :disabled="quantity > product.amount">Add to Cart</button>
+                    <button @click="buyNow(product)" :disabled="quantity > product.amount">Buy Now</button>
                 </div>
             </div>
         </div>
@@ -62,7 +68,7 @@
         name: string;
         description: string;
         price: number;
-        Amount: number;
+        amount: number;
         ImageUrl: string | null;
     }
 
