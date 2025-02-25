@@ -1,20 +1,55 @@
 ﻿<template>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/products">
+                <img src="https://localhost:7112/images/logo.png" alt="Magento icon by Icons8" class="logo" />
+            </a>
+        </div>
+        <div class="nav-center">
+            <input v-model="searchQ"
+                   type="text"
+                   placeholder="Search for products"
+                   class="search-bar"
+                   @keyup.enter="search" />
+        </div>
+        <div class="nav-right">
+            <a href="/cart">Cart</a>
+            <a href="/">Orders</a>
+            <a href="/">Account</a>
+        </div>
+    </nav>
     <div class="product-detail" v-if="product">
         <div class="product-container">
             <div class="image-container">
                 <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
             </div>
 
-           
+
             <div class="product-info">
                 <h1>{{ product.name }}</h1>
                 <p class="description">{{ product.description }}</p>
                 <p><strong>Price:</strong> ${{ product.price }}</p>
             </div>
+            <div class="side-panel">
+                <div class="price-info">
+                    <h2>Price: ${{ product.price }}</h2>
+                    <p>Free delivery every Sunday</p>
+                </div>
+
+                <div class="quantity">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" v-model="quantity" min="1" max="" />
+                </div>
+
+                <div class="buttons">
+                    <button @click="addToCart(product)">Add to Cart</button>
+                    <button @click="buyNow(product)">Buy Now</button>
+                </div>
+            </div>
         </div>
     </div>
     <div v-else>
-        <p>Loading product data...</p> 
+        <p>Loading product data...</p>
     </div>
 </template>
 
@@ -27,6 +62,7 @@
         name: string;
         description: string;
         price: number;
+        Amount: number;
         ImageUrl: string | null;
     }
 
@@ -35,6 +71,7 @@
         data() {
             return {
                 product: null as Product | null,
+                quantity: 1,
             };
         },
         mounted() {
@@ -56,12 +93,73 @@
                     console.error("Error fetching product", error);
                 }
             },
+            addToCart(product: Product) {
+                console.log(`Added ${product.name} to the cart.`);
+            },
+            buyNow(product: Product) {
+                console.log(`Proceeding with ${product.name} for purchase.`);
+            },
         },
     });
 </script>
 
 
 <style scoped>
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #232f3e;
+        padding: 10px 20px;
+        color: white;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 100;
+    }
+
+    .navbar-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-center {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    .nav-right {
+        align-items: center;
+    }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+            .nav-right a:hover {
+                background-color: #555;
+                border-radius: 4px;
+            }
+
+
+    .search-bar {
+        width: 500px;
+        padding: 10px;
+        border-radius: 4px;
+        border: none;
+    }
+
+    .logo {
+        height: 90px;
+        width: auto;
+        display: block;
+    }
     .product-detail {
         display: flex;
         justify-content: center;
@@ -119,4 +217,63 @@
             font-size: 1.2rem;
             color: #333;
         }
+    .side-panel {
+        width: 300px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 20px;
+    }
+
+    .price-info h2 {
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .price-info p {
+        color: #666;
+        font-size: 1rem;
+    }
+
+    .quantity {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .quantity label {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .quantity input {
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .buttons button {
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+            .buttons button:hover {
+                background-color: #0056b3;
+            }
 </style>
