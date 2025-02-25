@@ -49,12 +49,42 @@ namespace CommerceViewModels
             var amount = await _sDAO.GetById(id);
             return amount;
         }
-
-        public async Task<Product> GetById() 
+        public async Task<ProductViewModel> GetById(int id)
         {
-            Product product = await _pDAO.GetById(Id!);
-            return product;
+            try
+            {
+                Product product = await _pDAO.GetById(id);
+                if (product == null)
+                {
+                    return null; 
+                }
+
+               
+                ProductViewModel vm = new ProductViewModel(_pDAO, _sDAO)
+                {
+                    Id = product.Id,
+                    Name = product.Name ?? "Unknown Product",  
+                    Description = product.Description ?? "No description available",  
+                    Price = product.Price,
+                    Amount = await GetProductAmount(product.Id),
+                    Timer = product.Timer != null ? Convert.ToBase64String(product.Timer) : null, 
+                };
+
+              
+                if (product.ImageData != null)
+                {
+                    vm.ImageUrl = $"/images/{product.Id}.jpg";  // Assuming image is stored as a file
+                }
+
+                return vm;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
+
 
         public async Task<List<ProductViewModel>> GetAll()
         {

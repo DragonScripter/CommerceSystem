@@ -47,11 +47,13 @@ namespace CommerceWebsite.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             try
-            {
-
-                ProductViewModel viewmodel = new(_pDAO, _sDAO) { Id = id };
-                await viewmodel.GetById();
-                return Ok(viewmodel); 
+            { 
+                ProductViewModel viewmodel = await new ProductViewModel(_pDAO, _sDAO).GetById(id);
+                if (viewmodel == null)
+                {
+                    return NotFound();
+                }
+                return Ok(viewmodel);
             }
             catch (Exception ex)
             {
@@ -60,6 +62,7 @@ namespace CommerceWebsite.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError); // Something went wrong
             }
         }
+
 
         [HttpPost("{productId}/UploadImage")]
         public async Task<IActionResult> UploadImage(int productId, [FromForm] IFormFile image)
