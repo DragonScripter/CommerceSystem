@@ -18,6 +18,21 @@ namespace CommerceDAL.DAO
         {
             _repo = repo; 
         }
+        public async Task<Product> GetById(int id) 
+        {
+            Product product;
+            try 
+            {
+                product = await _repo.GetOne(c => c.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return product!;
+        }
         public async Task<List<Product>> GetAll() 
         {
             List<Product> allProducts = new();
