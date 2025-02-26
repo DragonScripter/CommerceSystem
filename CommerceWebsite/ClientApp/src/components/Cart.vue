@@ -26,13 +26,13 @@
         <div v-else>
             <div v-for="item in cart" :key="item.id" class="cart-item">
                 <p>{{ item.name }} - ${{ item.price }} x {{ item.quantity }}</p>
-                <button @click="removeFromCart(item.id)">Remove</button>
+                <button @click="removeFromCart(item.id)" class="btn btn-danger">Remove</button>
                 <input v-model="item.quantity" @change="updateQuantity(item)" type="number" min="1" :max="item.Amount" />
             </div>
             <div>
                 <strong>Total: ${{ cartTotal }}</strong>
             </div>
-            <button @click="checkout">Proceed to Checkout</button>
+            <button @click="checkout" class="btn btn-primary">Proceed to Checkout</button>
         </div>
     </div>
 </template>
