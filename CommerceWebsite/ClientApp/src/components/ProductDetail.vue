@@ -24,7 +24,6 @@
                 <img :src="'https://localhost:7112/images/' + product.id + '.jpg'" alt="Product Image" />
             </div>
 
-
             <div class="product-info">
                 <h1>{{ product.name }}</h1>
                 <p class="description">{{ product.description }}</p>
@@ -41,7 +40,7 @@
                     <input type="number"
                            id="quantity"
                            v-model="quantity"
-                           :max="product.Amount"
+                           :max="product.amount"
                            min="1"
                            :disabled="product.amount === 0" />
                     <p v-if="quantity > product.amount" style="color:red;">Not enough stock available</p>
@@ -100,21 +99,20 @@
                 }
             },
             addToCart(product: Product) {
-                let cart = JSON.parse(localstorage.getItem("cart"));
-                const productIndex = cart.findIndex(i => i.id == product.id);
+                if (typeof window !== "undefined" && window.localStorage) {
+                    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                    const productIndex = cart.findIndex(i => i.id == product.id);
 
-                if (productIndex !== -1) {
-                    cart[productIndex].quantity += this.quantity;
+                    if (productIndex !== -1) {
+                        cart[productIndex].quantity += this.quantity;
+                    } else {
+                        product.quantity = this.quantity;
+                        cart.push(product);
+                    }
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    console.log(`${product.name} added to cart`);
                 }
-                else
-                {
-                    product.quantity = this.quantity;
-                    cart.push(product);
-                }
-
-                localStorage.setItem("cart", JSON.stringify(cart));
-                console.log(`${product.name} added to cart`);
-
             },
             buyNow(product: Product) {
                 console.log(`Proceeding with ${product.name} for purchase.`);
@@ -122,6 +120,10 @@
         },
     });
 </script>
+
+<style scoped>
+    /* Add your styles here */
+</style>
 
 
 <style scoped>
@@ -180,6 +182,7 @@
         width: auto;
         display: block;
     }
+
     .product-detail {
         display: flex;
         justify-content: center;
@@ -237,6 +240,7 @@
             font-size: 1.2rem;
             color: #333;
         }
+
     .side-panel {
         width: 300px;
         background-color: white;
