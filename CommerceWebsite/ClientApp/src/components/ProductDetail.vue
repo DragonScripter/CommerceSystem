@@ -82,7 +82,7 @@
         },
         mounted() {
             const route = useRoute();
-            const productId = Number(route.params.id);  
+            const productId = Number(route.params.id);
             this.fetchProduct(productId);
         },
         methods: {
@@ -100,7 +100,21 @@
                 }
             },
             addToCart(product: Product) {
-                console.log(`Added ${product.name} to the cart.`);
+                let cart = JSON.parse(localstorage.getItem("cart"));
+                const productIndex = cart.findIndex(i => i.id == product.id);
+
+                if (productIndex !== -1) {
+                    cart[productIndex].quantity += this.quantity;
+                }
+                else
+                {
+                    product.quantity = this.quantity;
+                    cart.push(product);
+                }
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+                console.log(`${product.name} added to cart`);
+
             },
             buyNow(product: Product) {
                 console.log(`Proceeding with ${product.name} for purchase.`);
