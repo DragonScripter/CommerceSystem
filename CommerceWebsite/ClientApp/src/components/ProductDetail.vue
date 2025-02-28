@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="buttons">
-                    <button @click="addToCart(product)" :disabled="quantity > product.amount">Add to Cart</button>
-                    <button @click="buyNow(product)" :disabled="quantity > product.amount">Buy Now</button>
+                        <button @click="addToCart(product)" :disabled="quantity > product.amount">Add to Cart</button>
+                        <button @click="buyNow(product)" :disabled="quantity > product.amount">Buy Now</button>
                 </div>
             </div>
         </div>
@@ -112,6 +112,7 @@
 
                     localStorage.setItem("cart", JSON.stringify(cart));
                     console.log(`${product.name} added to cart`);
+                    this.$router.push('/cart');
                 }
             },
             buyNow(product: Product) {
