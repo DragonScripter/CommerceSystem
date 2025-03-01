@@ -65,7 +65,7 @@
         display: block;
     }
     h1 {
-        font-size: 2rem;
+        font-size: 3.5rem;
         margin-bottom: 20px;
     }
 </style>
