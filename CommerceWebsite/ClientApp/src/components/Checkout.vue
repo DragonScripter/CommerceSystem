@@ -28,8 +28,16 @@
             </div>
             <div class="side-panel">
                 <div class="price-info">
-                    <h2>Price: ${{ item.price }}</h2>
-                    <p>Free delivery every Sunday</p>
+                    <p>Choose your delivery options: </p>
+                    <label>
+                        <input type="radio" value="tomorrow" v-model="deliveryDate" />
+                        {{formattedTomorrow}}
+                    </label>
+                    <label>
+                        <input type="radio" :value="weekAfter" v-model="deliveryDate" />
+                        {{ formattedWeekAfter }}
+                    </label>
+                    <p>Your selected delivery date is: {{ deliveryDate }}</p>
                 </div>
             </div>
         </div>
@@ -57,6 +65,9 @@
         data() {
             return {
                 cart: [] as Product[],
+                deliveryDate: "",
+                tomorrow: this.getDate(1),
+                weekAfter: this.getDate(7),
             };
         },
         mounted() {
@@ -66,6 +77,17 @@
                     this.cart = JSON.parse(savedCart);
                 }
             }
+        },
+        computed()
+        {
+            formattedTomorrow()
+            {
+                return this.formateDate(this.tomorrow);
+            },
+            formattedWeekAfter()
+            {
+                return this.formatDate(this.weekAfter);
+            },
         },
     });
 </script>
@@ -126,19 +148,25 @@
     }
     .container {
         min-height: 100vh;
-        margin-top:120px;
+        margin-top: 120px;
+        width: 100%;
     }
 
     .product-detail {
         display: flex;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
         flex-direction: column;
-        padding: 0;
+        padding: 20px;
         background-color: #f4f4f4;
-      
+        width: 70%;
     }
-
+    .right-container {
+        width: 30%; 
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
     .product-container {
         display: flex;
         justify-content: space-between;
