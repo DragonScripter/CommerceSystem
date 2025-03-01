@@ -1,7 +1,7 @@
 ﻿<template>
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="/products">
+            <a href="/">
                 <img src="https://localhost:7112/images/logo.png" alt="Magento icon by Icons8" class="logo" />
             </a>
         </div>
