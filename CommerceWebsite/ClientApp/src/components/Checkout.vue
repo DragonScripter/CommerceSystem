@@ -89,6 +89,21 @@
                 return this.formatDate(this.weekAfter);
             },
         },
+        methods: {
+            getDate(daysToAdd: number)
+            {
+                const date = new Date();
+                date.setDate(date.getDate() + daysToAdd);
+                return date.toISOString().split('T')[0];
+            },
+            formateDate(date: string)
+            {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = new Date(date).toLocalDateString(undefined, options);
+                return formattedDate;
+            },
+
+        },
     });
 </script>
 
