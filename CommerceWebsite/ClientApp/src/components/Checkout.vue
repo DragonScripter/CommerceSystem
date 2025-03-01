@@ -78,7 +78,7 @@
                 }
             }
         },
-        computed()
+        computed:
         {
             formattedTomorrow()
             {
