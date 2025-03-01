@@ -73,7 +73,7 @@
                 }
             },
             checkout() {
-                alert("Proceeding to checkout");
+                this.$router.push('/checkout');
             },
         },
     });

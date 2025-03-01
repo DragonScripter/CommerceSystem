@@ -116,7 +116,7 @@
                 }
             },
             buyNow(product: Product) {
-                console.log(`Proceeding with ${product.name} for purchase.`);
+                this.$router.push('/checkout');
             },
         },
     });
