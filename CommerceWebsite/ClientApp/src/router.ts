@@ -5,6 +5,7 @@ import Cart from './components/Cart.vue';
 import AdminP from './components/AdminProducts.vue';
 import Dashboard from './components/Dashboard.vue';
 import ProductDetail from './components/ProductDetail.vue';
+import Checkout from './components/Checkout.vue';
 const routes : RouteRecordRaw[] = [
     {
         path: '/', 
@@ -26,6 +27,11 @@ const routes : RouteRecordRaw[] = [
         path: '/cart',
         name: 'Cart',
         component: Cart,
+    },
+    {
+        path: '/checkout',
+        name: 'Checkout',
+        component: Checkout,
     },
     {
         path: '/Admin',
