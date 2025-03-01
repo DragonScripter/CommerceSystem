@@ -14,35 +14,35 @@
             <a href="/">Account</a>
         </div>
     </nav>
-  <div class="container">
-    <div class="product-detail" v-for="item in cart" :key="item.id">
-        <div class="product-container">
-            <div class="image-container">
-                <img :src="'https://localhost:7112/images/' + item.id + '.jpg'" alt="Product Image" />
-            </div>
+    <div class="container">
+        <div class="product-detail" v-for="item in cart" :key="item.id">
+            <div class="product-container">
+                <div class="image-container">
+                    <img :src="'https://localhost:7112/images/' + item.id + '.jpg'" alt="Product Image" />
+                </div>
 
-            <div class="product-info">
-                <h1>{{ item.name }}</h1>
-                <p class="description">{{ item.description }}</p>
-                <p><strong>Price:</strong> ${{ item.price }}</p>
-            </div>
-            <div class="side-panel">
-                <div class="price-info">
-                    <p>Choose your delivery options: </p>
-                    <label>
-                        <input type="radio" value="tomorrow" v-model="deliveryDate" />
-                        {{formattedTomorrow}}
-                    </label>
-                    <label>
-                        <input type="radio" :value="weekAfter" v-model="deliveryDate" />
-                        {{ formattedWeekAfter }}
-                    </label>
-                    <p>Your selected delivery date is: {{ deliveryDate }}</p>
+                <div class="product-info">
+                    <h1>{{ item.name }}</h1>
+                    <p class="description">{{ item.description }}</p>
+                    <p><strong>Price:</strong> ${{ item.price }}</p>
+                </div>
+                <div class="side-panel">
+                    <div class="price-info">
+                        <p>Choose your delivery options: </p>
+                        <label>
+                            <input type="radio" value="tomorrow" v-model="deliveryDate" />
+                            {{formattedTomorrow}}
+                        </label>
+                        <label>
+                            <input type="radio" :value="weekAfter" v-model="deliveryDate" />
+                            {{ formattedWeekAfter }}
+                        </label>
+                        <p>Your selected delivery date is: {{ deliveryDate }}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
     <div class="right-container">
     </div>
 
@@ -78,31 +78,25 @@
                 }
             }
         },
-        computed:
-        {
-            formattedTomorrow()
-            {
-                return this.formateDate(this.tomorrow);
+        computed: {
+            formattedTomorrow() {
+                return this.formatDate(this.tomorrow);
             },
-            formattedWeekAfter()
-            {
-                return this.formatDate(this.weekAfter);
+            formattedWeekAfter() {
+                return this.formatDate(this.weekAfter); 
             },
         },
         methods: {
-            getDate(daysToAdd: number)
-            {
+            getDate(daysToAdd: number) {
                 const date = new Date();
                 date.setDate(date.getDate() + daysToAdd);
                 return date.toISOString().split('T')[0];
             },
-            formateDate(date: string)
-            {
+            formatDate(date: string) { 
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = new Date(date).toLocalDateString(undefined, options);
+                const formattedDate = new Date(date).toLocaleDateString(undefined, options);
                 return formattedDate;
             },
-
         },
     });
 </script>
@@ -161,6 +155,7 @@
         font-size: 3.5rem;
         margin-bottom: 20px;
     }
+
     .container {
         min-height: 100vh;
         margin-top: 120px;
@@ -176,12 +171,14 @@
         background-color: #f4f4f4;
         width: 70%;
     }
+
     .right-container {
-        width: 30%; 
+        width: 30%;
         padding: 20px;
         background-color: #f9f9f9;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
     .product-container {
         display: flex;
         justify-content: space-between;
@@ -199,15 +196,15 @@
 
     .image-container {
         flex: 1;
-        width: 100%; 
-        max-width: 200px; 
-        margin-right: 20px; 
+        width: 100%;
+        max-width: 200px;
+        margin-right: 20px;
     }
 
         .image-container img {
-            width: 100%; 
-            height: 200px; 
-            object-fit: cover; 
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
             border-radius: 10px;
         }
 
