@@ -15,8 +15,8 @@
         </div>
     </nav>
     <div class="container">
-        <div class="product-detail" v-for="item in cart" :key="item.id">
-            <div class="product-container">
+        <div class="product-container" v-for="item in cart" :key="item.id">
+            <div class="product-detail">
                 <div class="image-container">
                     <img :src="'https://localhost:7112/images/' + item.id + '.jpg'" alt="Product Image" />
                 </div>
@@ -42,9 +42,25 @@
                 </div>
             </div>
         </div>
+        <div class="right-container">
+            <div class="button">
+                <button @click="buyNow(product)">Buy Now</button>
+            </div>
+            <p>By placing your order, you agree to our store's <a href="/" target="_blank">terms and conditions</a>. Please review them carefully.</p>
+            <div class="order">
+                <h3>Order Summary</h3>
+                <p>Items: ${{cartTotal}}</p>
+                <p>Tax: ${{tax}}</p>
+                <p>Delivery fee: ${{delivery}}</p>
+            </div>
+            <div class="order-total">
+                <h3>Order Total: ${{total}}</h3>
+            </div>
+
+        </div>
     </div>
-    <div class="right-container">
-    </div>
+
+   
 
 </template>
 
@@ -85,6 +101,20 @@
             formattedWeekAfter() {
                 return this.formatDate(this.weekAfter); 
             },
+            cartTotal() {
+                return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+            },
+            tax() { 
+                return this.cartTotal * 0.10;
+            },
+            delivery()
+            {
+                return this.cartTotal * 0.005;
+            },
+            total()
+            {
+                return this.cartTotal + this.tax + this.delivery;
+            }
         },
         methods: {
             getDate(daysToAdd: number) {
@@ -157,61 +187,53 @@
     }
 
     .container {
+        display: flex;
+        flex-direction: row; 
         min-height: 100vh;
         margin-top: 120px;
         width: 100%;
+        flex-wrap: nowrap;
     }
 
     .product-detail {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
         flex-direction: column;
         padding: 20px;
         background-color: #f4f4f4;
         width: 70%;
-    }
-
-    .right-container {
-        width: 30%;
-        padding: 20px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        align-items: flex-start;
+        margin-bottom: 20px;
+        flex-grow: 1; 
     }
 
     .product-container {
         display: flex;
-        justify-content: space-between;
+        flex-direction: row;
+        justify-content: flex-start;
         align-items: flex-start;
         width: 100%;
-        max-width: 1200px;
         background-color: #fff;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-
-
     .image-container {
-        flex: 1;
-        width: 100%;
-        max-width: 200px;
+        flex: 0 0 200px;
         margin-right: 20px;
     }
 
         .image-container img {
             width: 100%;
-            height: 200px;
+            height: auto;
             object-fit: cover;
             border-radius: 10px;
         }
 
-
     .product-info {
-        flex: 2;
-        max-width: 600px;
+        flex: 1;
     }
 
         .product-info h1 {
@@ -240,4 +262,83 @@
         position: sticky;
         top: 20px;
     }
+
+    .right-container {
+        width: 30%;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        flex-shrink: 0;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 120px; 
+    }
+
+        .right-container .button {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .right-container .button button {
+                padding: 10px 20px;
+                background-color: #232f3e;
+                color: white;
+                font-size: 1.2rem;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                width: 100%;
+            }
+
+                .right-container .button button:hover {
+                    background-color: #555;
+                }
+
+        .right-container p {
+            font-size: 1rem;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .right-container a {
+            color: #232f3e;
+            text-decoration: none;
+        }
+
+        .right-container .order {
+            margin-top: 20px;
+            margin-bottom: 0px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .right-container .order h3 {
+                font-size: 1.5rem;
+                margin-bottom: 0px;
+            }
+
+            .right-container .order p {
+                font-size: 1.2rem;
+                margin: 5px 0;
+                color: #333;
+            }
+
+        .right-container .order-total {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+            .right-container .order-total h3 {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #232f3e;
+            }
+
+
 </style>
