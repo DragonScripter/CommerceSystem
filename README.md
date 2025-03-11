@@ -2,7 +2,7 @@
 --A project to mimic real world purchases and transactions. <br>
 
 <br>--Planned Features
-   <br>-- User Authentication(0%)
+   <br>-- User Authentication(40%%)
    <br>-- Product Management(In Progress)
    <br>-- Shopping Cart Functionality(85%)
    <br>-- Payment stimulation(40%)
