@@ -3,7 +3,9 @@ using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +18,18 @@ namespace CommerceDAL.DAO
         {
             _repo = repo;
         }
-        //need to do repository implementations
+        public async Task<Users?> GetByEmail(string email)
+        {
+            try
+            {
+               return await _repo.GetOne(c => c.Email== email);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+        }
     }
 }
