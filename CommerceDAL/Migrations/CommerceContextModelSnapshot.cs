@@ -17,7 +17,7 @@ namespace CommerceDAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -76,7 +76,7 @@ namespace CommerceDAL.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("CommerceDAL.Entities.Product", b =>
@@ -117,7 +117,7 @@ namespace CommerceDAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("CommerceDAL.Entities.Stocks", b =>
@@ -144,7 +144,7 @@ namespace CommerceDAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("CommerceDAL.Entities.Users", b =>
@@ -184,7 +184,7 @@ namespace CommerceDAL.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CommerceDAL.Entities.Orders", b =>
