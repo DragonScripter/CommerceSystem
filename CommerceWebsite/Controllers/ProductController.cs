@@ -1,10 +1,14 @@
 ﻿using CommerceDAL;
 using CommerceDAL.DAO;
 using CommerceViewModels;
+using Services;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Reflection;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Services.Services;
 
 namespace CommerceWebsite.Controllers
 {
@@ -14,6 +18,8 @@ namespace CommerceWebsite.Controllers
     {
         private readonly ProductDAO _pDAO;
         private readonly StocksDAO _sDAO;
+        private readonly UserDAO _uDAO;
+        private readonly AuthService _authService;
         private readonly CommerceContext _context;
 
         //public ProductController(ProductDAO productDAO, StocksDAO stocksDAO)
@@ -21,12 +27,32 @@ namespace CommerceWebsite.Controllers
         //    _pDAO = productDAO;
         //    _sDAO = stocksDAO;
         //}
-        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, CommerceContext context)
+        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, UserDAO userDAO, AuthService authService ,CommerceContext context)
         {
             _pDAO = productDAO;
             _sDAO = stocksDAO;
+            _uDAO = userDAO;
+            _authService = authService;
             _context = context;
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
+        {
+            if (string.IsNullOrWhiteSpace(loginRequest.Email) || string.IsNullOrWhiteSpace(loginRequest.Password))
+            {
+                return BadRequest(new { Message = "Email and password are required." });
+            }
+            var user = await _uDAO.GetByEmail(loginRequest.Email);
+            if (user == null || !_authService.Verify(loginRequest.Password, user.PasswordHash)) 
+            {
+                return Unauthorized(new { Message = "Invalid email or password." });
+            }
+            var token = _authService.GenerateJwtToken(user);
+
+            return Ok(new { Token = token, Message = "Login Sucessful!" });
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
