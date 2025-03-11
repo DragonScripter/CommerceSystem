@@ -88,6 +88,9 @@ namespace CommerceDAL
                .IsRowVersion()
                .IsConcurrencyToken();
 
+                entity.Property(e => e.TotalPrices)
+                .HasColumnType("decimal(18,2)");
+
                 entity.HasOne(o => o.Users).WithMany(u => u.UsersOrders)
                 .HasForeignKey(o => o.CustomerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
