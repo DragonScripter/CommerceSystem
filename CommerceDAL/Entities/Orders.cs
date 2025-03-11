@@ -19,7 +19,7 @@ namespace CommerceDAL.Entities
         public DateTime Date { get; set; }
         //payment simulation
         public string PaymentStatus { get; set; }
-        public decimal TotalPrices { get; set; }
+        public decimal TotalPrice { get; set; }
         public DateTime? OrderCompletion {  get; set; }
 
         public virtual Users Users { get; set; } = null!;

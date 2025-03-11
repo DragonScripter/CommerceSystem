@@ -84,11 +84,12 @@ namespace CommerceDAL
                 .HasMaxLength(100)
                 .IsUnicode(false);
                 entity.Property(e => e.Date).HasColumnType("smalldatetime");
+                entity.Property(o => o.OrderCompletion).HasColumnType("smalldatetime");
                 entity.Property(e => e.Timer)
                .IsRowVersion()
                .IsConcurrencyToken();
 
-                entity.Property(e => e.TotalPrices)
+                entity.Property(e => e.TotalPrice)
                 .HasColumnType("decimal(18,2)");
 
                 entity.HasOne(o => o.Users).WithMany(u => u.UsersOrders)
