@@ -28,6 +28,17 @@ namespace Services.Services
             _userM = userM;
             _signInM = signInM;
         }
+        public async Task<bool> Login(LoginRequest loginRequest) 
+        {
+            var result = await _signInM.PasswordSignInAsync
+                (
+                    loginRequest.Email,
+                    loginRequest.Password,
+                    false,
+                    lockoutOnFailure: false
+                );
+            return result.Succeeded;
+        }
         public async Task<IdentityResult> Register(RegisterRequest registerRequest) 
         {
             var user = new IdentityUser
