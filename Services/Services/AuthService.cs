@@ -17,11 +17,15 @@ namespace Services.Services
     {
         private readonly UserDAO _uDAO;
         private readonly IConfiguration _configuration;
+        private readonly UserManager<IdentityUser> _userM;
+        private readonly SignInManager<IdentityUser> _signInM;
 
-        public AuthService(UserDAO uDAO, IConfiguration configuration)
+        public AuthService(UserDAO uDAO, IConfiguration configuration, UserManager<IdentityUser> userM, SignInManager<IdentityUser> signInM)
         {
             _uDAO = uDAO;
             _configuration = configuration;
+            _userM = userM;
+            _signInM = signInM;
         }
 
         public bool Verify(string enteredPass, string storedHash) 
