@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace Services.Services
 {
@@ -27,7 +28,16 @@ namespace Services.Services
             _userM = userM;
             _signInM = signInM;
         }
-
+        public async Task<IdentityResult> Register(RegisterRequest registerRequest) 
+        {
+            var user = new IdentityUser
+            {
+                UserName = registerRequest.Email,
+                Email = registerRequest.Email
+            };
+            var result = await _userM.CreateAsync(user, registerRequest.Password);
+            return result;
+        }
         public bool Verify(string enteredPass, string storedHash) 
         {
             var hash = new PasswordHasher<Users>();
