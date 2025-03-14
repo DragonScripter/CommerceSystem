@@ -72,7 +72,7 @@ namespace CommerceWebsite.Controllers
             };
 
          
-            //await _uDAO.AddUser(customUser); 
+            await _uDAO.Add(customUser); 
 
             var token = _authService.GenerateJwtToken(customUser);
             return Ok(new { Token = token, Message = "User registered successfully!" });
