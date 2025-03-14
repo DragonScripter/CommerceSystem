@@ -31,5 +31,18 @@ namespace CommerceDAL.DAO
                 throw;
             }
         }
+        public async Task<int> Add(Users user)
+        {
+            try
+            {
+                await _repo.Add(user);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return user.Id;
+        }
     }
 }
