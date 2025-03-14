@@ -9,6 +9,9 @@ using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Services.Services;
+using CommerceDAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using CommerceWebsite.Models;
 
 namespace CommerceWebsite.Controllers
 {
@@ -21,20 +24,60 @@ namespace CommerceWebsite.Controllers
         private readonly UserDAO _uDAO;
         private readonly AuthService _authService;
         private readonly CommerceContext _context;
+        private readonly UserManager<IdentityUser> _uManager;
 
-        //public ProductController(ProductDAO productDAO, StocksDAO stocksDAO)
-        //{
-        //    _pDAO = productDAO;
-        //    _sDAO = stocksDAO;
-        //}
-        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, UserDAO userDAO, AuthService authService ,CommerceContext context)
+        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, UserDAO userDAO, AuthService authService ,CommerceContext context, UserManager<IdentityUser> userManager)
         {
             _pDAO = productDAO;
             _sDAO = stocksDAO;
             _uDAO = userDAO;
             _authService = authService;
             _context = context;
+            _uManager = userManager;
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel) 
+        {
+            if (string.IsNullOrWhiteSpace(registerModel.Email) || string.IsNullOrWhiteSpace(registerModel.Password))
+            {
+                return BadRequest(new { Message = "Email and password are required." });
+            }
+            var existingUser = await _uDAO.GetByEmail(registerModel.Email);
+            if (existingUser != null)
+            {
+                return BadRequest(new { Message = "User with this email already exists." });
+            }
+
+            var identityUser = new IdentityUser
+            {
+                UserName = registerModel.FirstName,
+                Email = registerModel.Email
+            };
+
+          
+            var result = await _uManager.CreateAsync(identityUser, registerModel.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { Message = "Error while registering the user." });
+            }
+
+           
+            var customUser = new Users
+            {
+                Id = Convert.ToInt32(identityUser.Id),
+                FirstName = registerModel.FirstName,
+                LastName = registerModel.LastName,
+                Email = registerModel.Email
+            };
+
+         
+            //await _uDAO.AddUser(customUser); 
+
+            var token = _authService.GenerateJwtToken(customUser);
+            return Ok(new { Token = token, Message = "User registered successfully!" });
+        }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)

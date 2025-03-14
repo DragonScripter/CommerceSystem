@@ -18,36 +18,11 @@ namespace Services.Services
     {
         private readonly UserDAO _uDAO;
         private readonly IConfiguration _configuration;
-        private readonly UserManager<IdentityUser> _userM;
-        private readonly SignInManager<IdentityUser> _signInM;
 
-        public AuthService(UserDAO uDAO, IConfiguration configuration, UserManager<IdentityUser> userM, SignInManager<IdentityUser> signInM)
+        public AuthService(UserDAO uDAO, IConfiguration configuration)
         {
             _uDAO = uDAO;
             _configuration = configuration;
-            _userM = userM;
-            _signInM = signInM;
-        }
-        public async Task<bool> Login(LoginRequest loginRequest) 
-        {
-            var result = await _signInM.PasswordSignInAsync
-                (
-                    loginRequest.Email,
-                    loginRequest.Password,
-                    false,
-                    lockoutOnFailure: false
-                );
-            return result.Succeeded;
-        }
-        public async Task<IdentityResult> Register(RegisterRequest registerRequest) 
-        {
-            var user = new IdentityUser
-            {
-                UserName = registerRequest.Email,
-                Email = registerRequest.Email
-            };
-            var result = await _userM.CreateAsync(user, registerRequest.Password);
-            return result;
         }
         public bool Verify(string enteredPass, string storedHash) 
         {
@@ -80,6 +55,33 @@ namespace Services.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
 
+        }
+        public string GenerateJwtToken(IdentityUser user)
+        {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var issuer = _configuration["JwtSettings:Issuer"];
+            var audience = _configuration["JwtSettings:Audience"];
+            var expiration = Convert.ToInt32(_configuration["JwtSettings:ExpirationMinutes"]);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),  
+                new Claim(ClaimTypes.Role, "User")  
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(expiration),
+                signingCredentials: credential
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
