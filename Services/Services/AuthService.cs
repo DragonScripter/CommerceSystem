@@ -6,16 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Services.Services
 {
     public class AuthService
     {
         private readonly UserDAO _uDAO;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(UserDAO uDAO)
+        public AuthService(UserDAO uDAO, IConfiguration configuration)
         {
             _uDAO = uDAO;
+            _configuration = configuration;
         }
 
         public bool Verify(string enteredPass, string storedHash) 
@@ -26,8 +32,29 @@ namespace Services.Services
         }
         public string GenerateJwtToken(Users user)
         {
-           
-            return "something";
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var issuer = _configuration["JwtSettings:Issuer"];
+            var audience = _configuration["JwtSettings:Audience"];
+            var expiration = Convert.ToInt32(_configuration["JwtSettings:ExpirationMinutes"]);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Role, "User")
+
+            };
+            
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
+            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var token = new JwtSecurityToken(issuer: issuer, 
+                audience: audience, 
+                claims:claims, 
+                expires:DateTime.Now.AddMinutes(expiration), 
+                signingCredentials:credential);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
     }
 }
