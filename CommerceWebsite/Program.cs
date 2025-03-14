@@ -6,6 +6,7 @@ using CommerceDAL.Repository.Interface;
 using CommerceViewModels;
 using CommerceWebsite.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddViewModels();
 
 builder.Services.AddControllers();
 
-
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

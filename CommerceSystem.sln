@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommerceWebsite", "Commerce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommerceViewModels", "CommerceViewModels\CommerceViewModels.csproj", "{85B91882-5363-4148-8EBF-A97DF1C3C371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceTests", "CommerceTests\CommerceTests.csproj", "{6C262255-E6E3-4AF3-BB73-6544693AE03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommerceTests", "CommerceTests\CommerceTests.csproj", "{6C262255-E6E3-4AF3-BB73-6544693AE03E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{1FBAB2FD-7844-4856-950A-DF55948CDB95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6C262255-E6E3-4AF3-BB73-6544693AE03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C262255-E6E3-4AF3-BB73-6544693AE03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C262255-E6E3-4AF3-BB73-6544693AE03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBAB2FD-7844-4856-950A-DF55948CDB95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBAB2FD-7844-4856-950A-DF55948CDB95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBAB2FD-7844-4856-950A-DF55948CDB95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBAB2FD-7844-4856-950A-DF55948CDB95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
