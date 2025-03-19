@@ -47,21 +47,20 @@
     export default defineComponent({
         name: "Login",
         data() {
-            return
-            {
-                email: "",
-                password: ""
+            return {
+                email: '',
+                password: '',
             };
         },
         methods: {
            async login() {
                 const loginRequest = {
-                    email = this.email,
-                    password = this.password,
+                    email : this.email,
+                    password : this.password,
                 };
 
                 try {
-                    const response = await fetch(`https://localhost:7112/api/login`{
+                    const response = await fetch(`https://localhost:7112/api/login`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
