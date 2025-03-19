@@ -37,46 +37,41 @@ namespace CommerceWebsite.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel) 
+        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
             if (string.IsNullOrWhiteSpace(registerModel.Email) || string.IsNullOrWhiteSpace(registerModel.Password))
             {
                 return BadRequest(new { Message = "Email and password are required." });
             }
+
             var existingUser = await _uDAO.GetByEmail(registerModel.Email);
             if (existingUser != null)
             {
                 return BadRequest(new { Message = "User with this email already exists." });
             }
 
-            var identityUser = new IdentityUser
-            {
-                UserName = registerModel.FirstName,
-                Email = registerModel.Email
-            };
 
-          
-            var result = await _uManager.CreateAsync(identityUser, registerModel.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(new { Message = "Error while registering the user." });
-            }
+            var passwordHasher = new PasswordHasher<Users>();
+            var hashedPassword = passwordHasher.HashPassword(null, registerModel.Password);
 
-           
+            
             var customUser = new Users
             {
-                Id = Convert.ToInt32(identityUser.Id),
                 FirstName = registerModel.FirstName,
                 LastName = registerModel.LastName,
-                Email = registerModel.Email
+                Email = registerModel.Email,
+                PasswordHash = hashedPassword 
             };
 
-         
-            await _uDAO.Add(customUser); 
+     
+            await _uDAO.Add(customUser);
 
+           
             var token = _authService.GenerateJwtToken(customUser);
+
             return Ok(new { Token = token, Message = "User registered successfully!" });
         }
+
 
 
         [HttpPost("login")]

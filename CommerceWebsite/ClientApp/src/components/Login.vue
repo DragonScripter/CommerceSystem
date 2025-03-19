@@ -14,7 +14,7 @@
         </div>
         <div class="nav-right">
             <a href="/cart">Cart</a>
-            <a href="/">Orders</a>
+            <a href="/orders">Orders</a>
             <a href="/">Account</a>
         </div>
     </nav>

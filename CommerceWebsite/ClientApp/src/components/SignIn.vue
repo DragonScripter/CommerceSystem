@@ -56,23 +56,23 @@
         name: "SignUp",
         data() {
             return {
-                firstname: '',
-                lastname: '',
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: '',
             };
         },
         methods: {
-           async signUp() {
+           async SignUp() {
                 const RegisterRequest = {
-                    firstname: this.firstname,
-                    lastname: this.lastname,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
                     email : this.email,
                     password : this.password,
                 };
 
                 try {
-                    const response = await fetch(`https://localhost:7112/api/register`, {
+                    const response = await fetch(`https://localhost:7112/api/Product/register`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
