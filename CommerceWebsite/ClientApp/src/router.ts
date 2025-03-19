@@ -7,6 +7,7 @@ import ProductDetail from './components/ProductDetail.vue';
 import Checkout from './components/Checkout.vue';
 import Login from './components/Login.vue';
 import SignUp from './components/SignIn.vue';
+import Order from './components/Orders.vue';
 const routes : RouteRecordRaw[] = [
     {
         path: '/', 
@@ -43,6 +44,20 @@ const routes : RouteRecordRaw[] = [
         path: '/login',
         name: 'Login',
         component: Login,
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: Order,
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem('token')) {
+                next({ name: Login, query: { redirect: to.fullPath } });
+            }
+            else
+            {
+                next();
+            }
+        },
     },
     {
         path: '/Dash',
