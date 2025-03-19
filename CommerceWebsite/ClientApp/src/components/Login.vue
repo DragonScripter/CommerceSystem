@@ -49,9 +49,42 @@
         data() {
             return
             {
-            }
+                email: "",
+                password: ""
+            };
         },
         methods: {
+           async login() {
+                const loginRequest = {
+                    email = this.email,
+                    password = this.password,
+                };
+
+                try {
+                    const response = await fetch(`https://localhost:7112/api/login`{
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(loginRequest),
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('token', result.token);
+                        const redirect = this.$router.query.redirect || '/';
+                        this.$router.push(redirect);
+                    }
+                    else
+                    {
+                        alert(result.message); 
+                    }
+                }
+                catch (error) {
+                    console.error("Error logging in:", error);
+                    alert("An error occurred. Please try again.");
+                }
+            }
 
         }
     })
