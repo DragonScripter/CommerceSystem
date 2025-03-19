@@ -71,7 +71,7 @@
                     const result = await response.json();
                     if (response.ok) {
                         localStorage.setItem('token', result.token);
-                        const redirect = this.$router.query.redirect || '/';
+                        const redirect = this.$route.query.redirect || '/';
                         this.$router.push(redirect);
                     }
                     else
