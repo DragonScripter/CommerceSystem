@@ -48,6 +48,58 @@
         </div>
     </div>
 </template>
+<script lang="ts">
+    import { defineComponent } from "vue";
+    import { useRoute } from "vue-router";
+
+    export default defineComponent({
+        name: "SignUp",
+        data() {
+            return {
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: '',
+            };
+        },
+        methods: {
+           async signUp() {
+                const RegisterRequest = {
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    email : this.email,
+                    password : this.password,
+                };
+
+                try {
+                    const response = await fetch(`https://localhost:7112/api/register`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(RegisterRequest),
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('token', result.token);
+                        const redirect = this.$route.query.redirect || '/';
+                        this.$router.push(redirect);
+                    }
+                    else
+                    {
+                        alert(result.message);
+                    }
+                }
+                catch (error) {
+                    console.error("Error logging in:", error);
+                    alert("An error occurred. Please try again.");
+                }
+            }
+
+        }
+    })
+</script>
 <style scoped>
     .navbar {
         display: flex;
