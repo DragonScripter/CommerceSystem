@@ -18,6 +18,35 @@
             <a href="/">Account</a>
         </div>
     </nav>
+    <div class="container">
+        <div class="card">
+            <h2>Sign up!</h2>
+
+            <form @submit.prevent="SignUp">
+                <div class="input-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" v-model="firstName" placeholder="Enter your first name" required>
+                </div>
+                <div class="input-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" v-model="lastName" placeholder="Enter your last name" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" v-model="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" v-model="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="SignUp-btn">Sign Up</button>
+            </form>
+            <p class="register-text">
+                Already have an account? <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
 </template>
 <style scoped>
     .navbar {
@@ -75,4 +104,74 @@
         width: auto;
         display: block;
     }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f3f3f3;
+        padding-top: 80px; 
+    }
+
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        text-align: center;
+    }
+
+    .input-group {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+    .SignUp-btn {
+        width: 100%;
+        background-color: #0073e6;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .SignUp-btn:hover {
+            background-color: #005bb5;
+        }
+
+    .register-text {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .register-text a {
+            color: #0073e6;
+            text-decoration: none;
+        }
+
+            .register-text a:hover {
+                text-decoration: underline;
+            }
+
 </style>
