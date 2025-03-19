@@ -3,6 +3,7 @@ using CommerceDAL.Entities;
 using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
 using CommerceViewModels;
+using Services.Services;
 
 namespace CommerceWebsite.Helpers
 {
@@ -13,12 +14,14 @@ namespace CommerceWebsite.Helpers
             services.AddScoped<IRepository<Product>, CommerceRepository<Product>>();
             services.AddScoped<IRepository<Stocks>, CommerceRepository<Stocks>>();
             services.AddScoped<IRepository<Users>, CommerceRepository<Users>>();
+            services.AddScoped<AuthService>();
         }
 
         public static void AddDAOs(this IServiceCollection services)
         {
             services.AddScoped<ProductDAO>();
             services.AddScoped<StocksDAO>();
+            services.AddScoped<UserDAO>();
         }
 
         public static void AddViewModels(this IServiceCollection services)
