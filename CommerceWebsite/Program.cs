@@ -6,12 +6,20 @@ using CommerceDAL.Repository.Interface;
 using CommerceViewModels;
 using CommerceWebsite.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Services.Services;
 using System.Text;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<CommerceContext>()
+    .AddDefaultTokenProviders();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
@@ -46,7 +54,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddRepositories();
 builder.Services.AddDAOs();
 builder.Services.AddViewModels();
-
 builder.Services.AddControllers();
 
 
