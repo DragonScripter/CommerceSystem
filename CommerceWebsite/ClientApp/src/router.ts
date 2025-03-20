@@ -29,6 +29,14 @@ const routes : RouteRecordRaw[] = [
         path: '/checkout',
         name: 'Checkout',
         component: Checkout,
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem('token')) {
+                next({ name: 'Login', query: { redirect: to.fullPath } });
+            }
+            else {
+                next();
+            }
+        },
     },
     {
         path: '/Admin',
