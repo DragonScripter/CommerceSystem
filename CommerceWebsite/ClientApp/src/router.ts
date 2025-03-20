@@ -51,7 +51,7 @@ const routes : RouteRecordRaw[] = [
         component: Order,
         beforeEnter: (to, from, next) => {
             if (!localStorage.getItem('token')) {
-                next({ name: Login, query: { redirect: to.fullPath } });
+                next({ name: 'Login', query: { redirect: to.fullPath } });
             }
             else
             {
