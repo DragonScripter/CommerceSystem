@@ -1,14 +1,12 @@
 ﻿using CommerceDAL;
 using CommerceDAL.DAO;
 using CommerceViewModels;
-using Services;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Services.Services;
 using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Services.Services;
 using CommerceDAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using CommerceWebsite.Models;
@@ -22,19 +20,77 @@ namespace CommerceWebsite.Controllers
         private readonly ProductDAO _pDAO;
         private readonly StocksDAO _sDAO;
         private readonly UserDAO _uDAO;
+        private readonly OrderDAO _oDAO;
         private readonly AuthService _authService;
         private readonly CommerceContext _context;
-        private readonly UserManager<IdentityUser> _uManager;
+        
 
-        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, UserDAO userDAO, AuthService authService ,CommerceContext context, UserManager<IdentityUser> userManager)
+        public ProductController(ProductDAO productDAO, StocksDAO stocksDAO, UserDAO userDAO,
+            AuthService authService ,CommerceContext context, OrderDAO orderDAO)
         {
             _pDAO = productDAO;
             _sDAO = stocksDAO;
             _uDAO = userDAO;
+            _oDAO = orderDAO;
             _authService = authService;
             _context = context;
-            _uManager = userManager;
         }
+        [HttpPost("place")]
+        public async Task<IActionResult> PlaceOrder([FromBody] OrderRequest orderRequest)
+        {
+            if (orderRequest == null || orderRequest.Products.Count == 0)
+            {
+                return BadRequest(new { Message = "Invalid order request." });
+            }
+
+            var user = await _uDAO.GetById(orderRequest.CustomerId);
+            if (user == null)
+            {
+                return BadRequest(new { Message = "User not found." });
+            }
+
+            foreach (var product in orderRequest.Products)
+            {
+                var productInDb = await _pDAO.GetById(product.ProductId);
+                if (productInDb == null)
+                {
+                    return BadRequest(new { Message = $"Product with ID {product.ProductId} not found." });
+                }
+
+                var stock = await _sDAO.GetByProductId(product.ProductId);
+                if (stock == null || stock.Quanity < product.Quantity)
+                {
+                    return BadRequest(new { Message = $"Not enough stock for product {product.Name}" });
+                }
+
+                stock.Quanity -= product.Quantity;
+                await _sDAO.Update(stock);
+
+                var order = new Orders
+                {
+                    CustomerId = orderRequest.CustomerId,
+                    CustomerName = $"{user.FirstName} {user.LastName}",
+                    ProductId = product.ProductId, 
+                    StockId = stock.Id, 
+                    OrderStatus = "Pending",
+                    PaymentStatus = "Paid",
+                    Date = DateTime.UtcNow,
+                    TotalPrice = product.Price * product.Quantity,
+                    ProductDescription = $"{productInDb.Name} - {product.Quantity} pcs",
+                    StockQuantity = product.Quantity,
+                    OrderCompletion = null
+                };
+
+                await _oDAO.Add(order);
+            }
+
+            return Ok(new { Message = "Order placed successfully!" });
+        }
+
+
+
+
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)

@@ -15,6 +15,7 @@ namespace CommerceWebsite.Helpers
             services.AddScoped<IRepository<Product>, CommerceRepository<Product>>();
             services.AddScoped<IRepository<Stocks>, CommerceRepository<Stocks>>();
             services.AddScoped<IRepository<Users>, CommerceRepository<Users>>();
+            services.AddScoped<IRepository<Orders>, CommerceRepository<Orders>>();
             services.AddScoped<AuthService>();
         }
 

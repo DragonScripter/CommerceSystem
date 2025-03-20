@@ -18,6 +18,21 @@ namespace CommerceDAL.DAO
         {
             _repo = repo;
         }
+        public async Task<Users> GetById(int id)
+        {
+            Users user;
+            try
+            {
+                user = await _repo.GetOne(c => c.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return user!;
+        }
         public async Task<Users?> GetByEmail(string email)
         {
             try

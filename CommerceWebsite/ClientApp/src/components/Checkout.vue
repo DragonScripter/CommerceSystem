@@ -60,7 +60,7 @@
         </div>
     </div>
 
-   
+
 
 </template>
 
@@ -72,7 +72,7 @@
         name: string;
         description: string;
         price: number;
-        amount: number;
+        quantity: number;  
         ImageUrl: string | null;
     }
 
@@ -99,20 +99,18 @@
                 return this.formatDate(this.tomorrow);
             },
             formattedWeekAfter() {
-                return this.formatDate(this.weekAfter); 
+                return this.formatDate(this.weekAfter);
             },
             cartTotal() {
                 return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
             },
-            tax() { 
+            tax() {
                 return this.cartTotal * 0.10;
             },
-            delivery()
-            {
+            delivery() {
                 return this.cartTotal * 0.005;
             },
-            total()
-            {
+            total() {
                 return this.cartTotal + this.tax + this.delivery;
             }
         },
@@ -122,14 +120,75 @@
                 date.setDate(date.getDate() + daysToAdd);
                 return date.toISOString().split('T')[0];
             },
-            formatDate(date: string) { 
+            formatDate(date: string) {
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 const formattedDate = new Date(date).toLocaleDateString(undefined, options);
                 return formattedDate;
             },
-        },
+            async buyNow() {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    alert("Please log in to complete the purchase.");
+                    this.$router.push({ name: "Login", query: { redirect: "/checkout" } });
+                    return;
+                }
+
+                const userId = this.getUserIdFromToken(token);  
+                const orderData = {
+                    CustomerId: userId,
+                    Products: this.cart.map(item => ({
+                        ProductId: item.id,
+                        Name: item.name,
+                        Description: item.description,
+                        Quantity: item.quantity,
+                        Price: item.price
+                    })),
+                   
+                };
+
+                try {
+                    const response = await fetch(`https://localhost:7112/api/Product/place`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(orderData)
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert("Order placed successfully!");
+                        localStorage.removeItem("cart");
+                        this.$router.push("/orders");
+                    } else {
+                        alert(result.Message);
+                    }
+                } catch (error) {
+                    console.error("Error placing order:", error);
+                    alert("An error occurred. Please try again.");
+                }
+            },
+            getUserIdFromToken(token: string) {
+                try {
+                    const payloadBase64 = token.split('.')[1]; 
+                    const payloadJson = atob(payloadBase64);   
+                    const payload = JSON.parse(payloadJson);  
+
+                    console.log(payload);  
+
+                   
+                    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+                } catch (error) {
+                    console.error("Error decoding the token:", error);
+                    return null;
+                }
+            },
+
+        }
     });
 </script>
+
 
 
 <style scoped>
@@ -188,7 +247,7 @@
 
     .container {
         display: flex;
-        flex-direction: row; 
+        flex-direction: row;
         min-height: 100vh;
         margin-top: 120px;
         width: 100%;
@@ -203,7 +262,7 @@
         width: 70%;
         align-items: flex-start;
         margin-bottom: 20px;
-        flex-grow: 1; 
+        flex-grow: 1;
     }
 
     .product-container {
@@ -276,7 +335,7 @@
         display: flex;
         flex-direction: column;
         position: sticky;
-        top: 120px; 
+        top: 120px;
     }
 
         .right-container .button {
@@ -339,6 +398,4 @@
                 font-weight: bold;
                 color: #232f3e;
             }
-
-
 </style>

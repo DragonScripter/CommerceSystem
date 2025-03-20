@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommerceDAL\CommerceDAL.csproj" />
+    <ProjectReference Include="..\CommerceViewModels\CommerceViewModels.csproj" />
   </ItemGroup>
 
 </Project>

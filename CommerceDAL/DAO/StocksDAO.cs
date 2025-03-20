@@ -1,6 +1,7 @@
 ﻿using CommerceDAL.Entities;
 using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +15,11 @@ namespace CommerceDAL.DAO
     public class StocksDAO
     {
         readonly IRepository<Stocks> _repo;
-        public StocksDAO(IRepository<Stocks> repo)
+        private readonly CommerceContext _context;
+        public StocksDAO(IRepository<Stocks> repo, CommerceContext commerceContext)
         {
             _repo = repo;
+            _context = commerceContext;
         }
         public async Task<Stocks> GetById(int id) 
         {
@@ -60,6 +63,13 @@ namespace CommerceDAL.DAO
                 throw;
             }
             return stock.Id;
+        }
+
+        public async Task<Stocks> GetByProductId(int productId)
+        {
+            return await _context.Stocks
+                .Where(s => s.ProductId == productId)
+                .FirstOrDefaultAsync();
         }
     }
 }
