@@ -37,20 +37,23 @@ namespace CommerceWebsite.Controllers
         }
 
         [HttpGet("order")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllOrders()
         {
-            try
-            {
-                ProductViewModel viewmodel = new(_pDAO, _sDAO);
-                List<ProductViewModel> allProducts = await viewmodel.GetAll();
-                return Ok(allProducts);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Problem in " + GetType().Name + " " +
-                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError); 
-            }
+            var orders = await _oDAO.GetAll();
+
+            var orderViewModels = orders.Select(o=> new OrderViewModel
+                {
+                OrderId = o.Id,
+                CustomerId = o.CustomerId,
+                CustomerName = o.CustomerName,
+                OrderStatus = o.OrderStatus,
+                TotalPrice = o.TotalPrice,
+                PaymentStatus = o.PaymentStatus,
+                Date = o.Date,
+                OrderCompletion = o.OrderCompletion
+            }).ToList();
+
+            return Ok(orderViewModels);
         }
         [HttpPost("place")]
         public async Task<IActionResult> PlaceOrder([FromBody] OrderRequest orderRequest)
