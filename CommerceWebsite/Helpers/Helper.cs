@@ -23,6 +23,7 @@ namespace CommerceWebsite.Helpers
             services.AddScoped<ProductDAO>();
             services.AddScoped<StocksDAO>();
             services.AddScoped<UserDAO>();
+            services.AddScoped<OrderDAO>();
         }
 
         public static void AddViewModels(this IServiceCollection services)
