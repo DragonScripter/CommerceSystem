@@ -60,7 +60,7 @@
                 };
 
                 try {
-                    const response = await fetch(`https://localhost:7112/api/login`, {
+                    const response = await fetch(`https://localhost:7112/api/Product/login`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

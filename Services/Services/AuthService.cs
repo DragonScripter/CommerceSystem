@@ -24,12 +24,13 @@ namespace Services.Services
             _uDAO = uDAO;
             _configuration = configuration;
         }
-        public bool Verify(string enteredPass, string storedHash) 
+        public bool Verify(string enteredPass, string storedHash)
         {
-            var hash = new PasswordHasher<Users>();
-            var result = hash.VerifyHashedPassword(null, enteredPass, storedHash);
+            var passwordHasher = new PasswordHasher<Users>();
+            var result = passwordHasher.VerifyHashedPassword(null, storedHash, enteredPass);
             return result == PasswordVerificationResult.Success;
         }
+
         public string GenerateJwtToken(Users user)
         {
             var secretKey = _configuration["JwtSettings:SecretKey"];
