@@ -44,7 +44,7 @@
         methods: {
             async fetchOrderss(): Promise<void> {
                 try {
-                    const response = await fetch("https://localhost:7112/api/Product");
+                    const response = await fetch(`https://localhost:7112/api/Product/order`);
                     if (response.ok) {
                         this.products = await response.json();
                     } else {
