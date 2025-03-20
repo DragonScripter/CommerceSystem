@@ -35,6 +35,23 @@ namespace CommerceWebsite.Controllers
             _authService = authService;
             _context = context;
         }
+
+        [HttpGet("order")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                ProductViewModel viewmodel = new(_pDAO, _sDAO);
+                List<ProductViewModel> allProducts = await viewmodel.GetAll();
+                return Ok(allProducts);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); 
+            }
+        }
         [HttpPost("place")]
         public async Task<IActionResult> PlaceOrder([FromBody] OrderRequest orderRequest)
         {
