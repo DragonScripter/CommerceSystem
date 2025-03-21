@@ -1,5 +1,7 @@
-﻿using CommerceDAL.Entities;
+﻿using Castle.Core.Resource;
+using CommerceDAL.Entities;
 using CommerceDAL.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,9 +15,18 @@ namespace CommerceDAL.DAO
     public class OrderDAO
     {
         readonly IRepository<Orders> _repo;
-        public OrderDAO(IRepository<Orders> repo)
+        private readonly CommerceContext _context;
+        public OrderDAO(IRepository<Orders> repo, CommerceContext context)
         {
             _repo = repo;
+            _context = context;
+        }
+
+        public async Task<List<Orders>> GetById(int id)
+        {
+            return await _context.Orders
+                        .Where(o => o.CustomerId == id)
+                        .ToListAsync();
         }
         public async Task<List<Orders>> GetAll()
         {

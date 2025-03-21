@@ -36,13 +36,18 @@ namespace CommerceWebsite.Controllers
             _context = context;
         }
 
-        [HttpGet("order")]
-        public async Task<IActionResult> GetAllOrders()
+        [HttpGet("order/{Id}")]
+        public async Task<IActionResult> GetAllOrders(int Id)
         {
-            var orders = await _oDAO.GetAll();
+            var orders = await _oDAO.GetById(Id);
 
-            var orderViewModels = orders.Select(o=> new OrderViewModel
-                {
+            if (orders == null)
+            {
+                return NotFound(new { Message = "No orders found for this user." });
+            }
+
+            var orderViewModels = orders.Select(o => new OrderViewModel
+            {
                 OrderId = o.Id,
                 CustomerId = o.CustomerId,
                 CustomerName = o.CustomerName,

@@ -2,10 +2,10 @@
     <nav class="navbar">
         <div class="navbar-left">
             <a href="/">
-                <img src="https://localhost:7112/images/logo.png" alt="Magento icon by Icons8" class="logo" />
+                <img src="https://localhost:7112/images/logo.png" alt="Magento icon" class="logo" />
             </a>
         </div>
-        <div class="nav-center">
+        <div class="navbar-center">
             <input v-model="searchQ"
                    type="text"
                    placeholder="Search for products"
@@ -23,13 +23,28 @@
         <div class="container">
             <div class="orders">
                 <div v-for="order in orders" :key="order.id" class="order-item">
+                    <p><strong>Customer:</strong> {{ order.customerName }}</p>
+                    <p><strong>Status:</strong> {{ order.orderStatus }}</p>
+                    <p><strong>Total Price:</strong> ${{ order.totalPrice }}</p>
+                    <p><strong>Order Date:</strong> {{ new Date(order.date).toLocaleDateString() }}</p>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script lang="ts">
     import { defineComponent } from "vue";
+
+    interface Order {
+        id: number;
+        customerId: number;
+        customerName: string;
+        orderStatus: string;
+        totalPrice: number;
+        date: string;
+        paymentStatus: string;
+    }
 
     export default defineComponent({
         name: "OrdersPage",
@@ -42,11 +57,22 @@
             this.fetchOrders();
         },
         methods: {
-            async fetchOrderss(): Promise<void> {
+            async fetchOrders(): Promise<void> {
                 try {
-                    const response = await fetch(`https://localhost:7112/api/Product/order`);
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                        alert("Please log in.");
+                        return;
+                    }
+
+                    const userId = this.getUserIdFromToken(token);
+                    if (!userId) {
+                        alert("Invalid user.");
+                        return;
+                    }
+                    const response = await fetch(`https://localhost:7112/api/Product/order/${userId}`);
                     if (response.ok) {
-                        this.products = await response.json();
+                        this.orders = await response.json();
                     } else {
                         console.error("Failed to fetch orders");
                     }
@@ -54,6 +80,22 @@
                     console.error("Error fetching data", error);
                 }
             },
+            getUserIdFromToken(token: string) {
+                try {
+                    const payloadBase64 = token.split('.')[1];
+                    const payloadJson = atob(payloadBase64);
+                    const payload = JSON.parse(payloadJson);
+
+                    console.log(payload);
+
+
+                    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+                } catch (error) {
+                    console.error("Error decoding the token:", error);
+                    return null;
+                }
+            },
+
         },
     });
 </script>
@@ -113,6 +155,7 @@
         width: auto;
         display: block;
     }
+
     h1 {
         display: flex;
         color: #42b983;
