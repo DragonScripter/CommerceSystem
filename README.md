@@ -11,5 +11,5 @@
      <br>-- Administrator panel(30%) - Dashboard for user, product and orders management.
 
 --Architecture Diagram
-(Image/Ecommerce.drawio.png)
+![Architecture Diagram](Image/Ecommerce.drawio.png)
      
