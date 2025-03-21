@@ -9,3 +9,7 @@
 <br>--Additional Features(To be implemented)
      <br>-- Product Management- Crud for products.
      <br>-- Administrator panel(30%) - Dashboard for user, product and orders management.
+
+--Architecture Diagram
+(Image/Ecommerce.drawio.png)
+     
