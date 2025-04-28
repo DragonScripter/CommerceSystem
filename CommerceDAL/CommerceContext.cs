@@ -46,8 +46,12 @@ namespace CommerceDAL
                 entity.HasIndex(e => e.Name).IsUnique();
 
                 entity.HasMany(e => e.Categories)
-                .WithMany(c => c.Products)
-                .UsingEntity(j => j.ToTable("ProductCategories"));
+                  .WithMany(c => c.Products)
+                  .UsingEntity<ProductCategory>(
+                      j => j.HasOne(pc => pc.Category).WithMany().HasForeignKey(pc => pc.CategoryId),
+                      j => j.HasOne(pc => pc.Product).WithMany().HasForeignKey(pc => pc.ProductId),
+                      j => j.ToTable("ProductCategories")
+                  );
             });
             modelBuilder.Entity<Users>(entity => 
             {
