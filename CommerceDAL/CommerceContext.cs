@@ -42,6 +42,10 @@ namespace CommerceDAL
                 entity.Property(e => e.ImageData)
                 .HasColumnType("varbinary(max)");
                 entity.HasIndex(e => e.Name).IsUnique();
+
+                entity.HasMany(e => e.Categories)
+                .WithMany(c => c.Products)
+                .UsingEntity(j => j.ToTable("ProductCategories"));
             });
             modelBuilder.Entity<Users>(entity => 
             {
@@ -106,6 +110,15 @@ namespace CommerceDAL
                 .HasForeignKey(o => o.StockId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_StocksHasOrders");
+
+            });
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK_Category");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
             });
 
