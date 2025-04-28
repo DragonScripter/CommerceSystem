@@ -16,5 +16,6 @@ namespace CommerceDAL.Entities
 
         public virtual ICollection<Stocks> Stocks { get; set; } = new List<Stocks>();
         public virtual ICollection<Orders> ProductOrders { get; set; } = new List<Orders>();
+        public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
     }
 }
