@@ -18,6 +18,8 @@ namespace CommerceDAL
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Stocks> Stocks { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<ProductCategory> ProductCategory {  get; set; }
 
 
 
