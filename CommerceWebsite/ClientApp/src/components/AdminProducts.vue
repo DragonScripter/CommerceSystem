@@ -24,6 +24,15 @@
                     <label for="price">Price</label>
                     <input type="number" id="price" v-model="newProduct.price" />
 
+                    <label for="category">Category</label>
+                    <select id="category" v-model="newProduct.category">
+                        <option disabled value="">Please select one</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Toys">Toys</option>
+                        <option value="Home & Kitchen">Home & Kitchen</option>
+                    </select>
+
                     <button type="submit">Add Product</button>
                     <button type="button" @click="showAddProductModal = false">Cancel</button>
                 </form>
@@ -41,6 +50,14 @@
 
                     <label for="edit-price">Price</label>
                     <input type="number" id="edit-price" v-model="editProductData.price" />
+                    <label>Category</label>
+                    <select v-model="editProductData.category">
+                        <option disabled value="">Please select one</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Toys">Home & Kitchen</option>
+                    </select>
+
 
                     <button type="submit">Save Changes</button>
                     <button type="button" @click="showEditProductModal = false">Cancel</button>
@@ -81,24 +98,23 @@
         description: string; 
         price: number;
         imageUrl: string;
+        category: string,
     }
 
     export default defineComponent({
         name: "ProductPage",
         data() {
-
             return {
                 products: [] as Product[],
-                showAddProductModal: false, 
+                showAddProductModal: false,
+                showEditProductModal: false,
                 newProduct: {
                     name: "",
                     description: "",
                     amount: 0,
                     price: 0,
-                    editProductData: null as Product | null,
-                    showEditProductModal: false,
-
-                } as Omit<Product, 'id' | 'imageUrl'>, 
+                },
+                editProductData: null as Product | null,
             };
         },
         mounted() {

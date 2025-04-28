@@ -212,7 +212,7 @@ namespace CommerceWebsite.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet("Edit/{Id}")]
         public async Task<IActionResult> EditProduct(int id)
         {
             var product = await _pDAO.GetProductWithCategoriesAndStocks(id);
@@ -239,7 +239,7 @@ namespace CommerceWebsite.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductEditViewModel model)
         {
