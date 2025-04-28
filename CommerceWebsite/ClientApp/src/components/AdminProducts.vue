@@ -29,6 +29,25 @@
                 </form>
             </div>
         </div>
+        <div v-if="showEditProductModal" class="modal">
+            <div class="modal-content">
+                <h3>Edit Product</h3>
+                <form @submit.prevent="saveEditedProduct">
+                    <label for="edit-name">Product Name</label>
+                    <input type="text" id="edit-name" v-model="editProductData.name" />
+
+                    <label for="edit-description">Description</label>
+                    <input type="text" id="edit-description" v-model="editProductData.description" />
+
+                    <label for="edit-price">Price</label>
+                    <input type="number" id="edit-price" v-model="editProductData.price" />
+
+                    <button type="submit">Save Changes</button>
+                    <button type="button" @click="showEditProductModal = false">Cancel</button>
+                </form>
+            </div>
+        </div>
+
 
         <div class="container">
             <div v-for="product in products" :key="product.id" class="product-item">
@@ -59,7 +78,7 @@
     interface Product {
         id: number;
         name: string;
-        description: string; // Fixed typo here
+        description: string; 
         price: number;
         imageUrl: string;
     }
@@ -67,6 +86,7 @@
     export default defineComponent({
         name: "ProductPage",
         data() {
+
             return {
                 products: [] as Product[],
                 showAddProductModal: false, 
@@ -75,6 +95,9 @@
                     description: "",
                     amount: 0,
                     price: 0,
+                    editProductData: null as Product | null,
+                    showEditProductModal: false,
+
                 } as Omit<Product, 'id' | 'imageUrl'>, 
             };
         },
@@ -142,6 +165,39 @@
             closeAddProductModal() {
                 this.showAddProductModal = false; 
                 this.newProduct = { name: "", description: "", amount:0, price: 0 }; 
+            },
+            async editProduct(productId: number): Promise<void> {
+                const product = this.products.find(p => p.id === productId);
+                if (product) {
+                   
+                    this.editProductData = { ...product };
+                    this.showEditProductModal = true;
+                }
+            },
+
+            async saveEditedProduct(): Promise<void> {
+                if (!this.editProductData) return;
+
+                try {
+                    const response = await fetch(`https://localhost:7112/api/Product/${this.editProductData.id}`, {
+                        method: "PUT", 
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(this.editProductData),
+                    });
+
+                    if (response.ok) {
+                        alert("Product updated successfully!");
+                        this.showEditProductModal = false;
+                        this.fetchProducts(); 
+                    } else {
+                        console.error("Failed to update product.");
+                        alert("Failed to update product.");
+                    }
+                } catch (error) {
+                    console.error("Error updating product", error);
+                }
             },
         },
     });

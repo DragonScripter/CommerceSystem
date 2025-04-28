@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using CommerceDAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using CommerceWebsite.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommerceWebsite.Controllers
 {
@@ -210,14 +212,76 @@ namespace CommerceWebsite.Controllers
 
 
 
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(int id)
+        {
+            var product = await _pDAO.GetProductWithCategoriesAndStocks(id);
 
-        //public async Task<IActionResult> EditProduct(int id) 
-        //{
-        //    //var product = await _pDAO.GetProductWithCategoriesAndStocks(id);
-        //}
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var model = new ProductEditViewModel
+            {
+                ProductId = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                StockQuanity = product.Stocks.FirstOrDefault()?.Quanity ?? 0,
+                Categories = await _context.Category
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name,
+                }).ToListAsync(),
+                SelectedCategory = product.Categories.Select(c => c.Id).ToList()
+            };
+            return Ok(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ProductEditViewModel model)
+        {
+            if (ModelState.IsValid) 
+            {
+                var product = await _pDAO.GetProductWithCategoriesAndStocks(model.ProductId);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                product.Name = model.Name;
+                product.Description = model.Description;
+                product.Price = model.Price;
+
+                var stock = await _sDAO.GetByProductId(product.Id);
+                if (stock != null)
+                {
+                    stock.Quanity = model.StockQuanity;
+                    await _sDAO.Update(stock); 
+                }
+
+              
+                await _pDAO.UpdateProductCategory(product, model.SelectedCategory);
+
+                
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index)); 
+            }
+            model.Categories = await _context.Category
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToListAsync();
+
+            return Ok(model);
+
+        }
 
 
-        [HttpPost("{productId}/UploadImage")]
+            [HttpPost("{productId}/UploadImage")]
         public async Task<IActionResult> UploadImage(int productId, [FromForm] IFormFile image)
         {
             if (image == null || image.Length == 0)
