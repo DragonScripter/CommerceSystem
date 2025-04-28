@@ -1,6 +1,7 @@
 ﻿using CommerceDAL.Entities;
 using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +15,11 @@ namespace CommerceDAL.DAO
     public class ProductDAO
     {
         readonly IRepository<Product> _repo;
-        public ProductDAO(IRepository<Product> repo)
+        readonly CommerceContext _context;
+        public ProductDAO(IRepository<Product> repo, CommerceContext context)
         {
-            _repo = repo; 
+            _repo = repo;
+            _context = context;
         }
         public async Task<Product> GetById(int id) 
         {
@@ -47,6 +50,13 @@ namespace CommerceDAL.DAO
                 throw;
             }
             return allProducts;
+        }
+        public async Task<Product> GetProductWithCategoriesAndStocks(int id) 
+        {
+            return await _context.Product
+                .Include(p => p.Categories)
+                .Include(p => p.Stocks)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<UpdateStatus> Update(Product product) 
         {
