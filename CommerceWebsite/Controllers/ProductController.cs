@@ -209,6 +209,14 @@ namespace CommerceWebsite.Controllers
         }
 
 
+
+
+        //public async Task<IActionResult> EditProduct(int id) 
+        //{
+        //    //var product = await _pDAO.GetProductWithCategoriesAndStocks(id);
+        //}
+
+
         [HttpPost("{productId}/UploadImage")]
         public async Task<IActionResult> UploadImage(int productId, [FromForm] IFormFile image)
         {

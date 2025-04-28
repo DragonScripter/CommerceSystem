@@ -1,4 +1,5 @@
-﻿using CommerceDAL.Entities;
+﻿using Castle.Components.DictionaryAdapter;
+using CommerceDAL.Entities;
 using CommerceDAL.Repository.Implementation;
 using CommerceDAL.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,27 @@ namespace CommerceDAL.DAO
                 .Include(p => p.Categories)
                 .Include(p => p.Stocks)
                 .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task UpdateProductCategory(Product product, List<int> selectedCategory)
+        {
+            var existingCategories = _context.ProductCategory
+                .Where(pc => pc.ProductId == product.Id)
+                .ToList();
+
+            _context.ProductCategory.RemoveRange(existingCategories);
+
+            foreach (var categoryId in selectedCategory) 
+            {
+                var productCategory = new ProductCategory
+                {
+                    ProductId = product.Id,
+                    CategoryId = categoryId,
+                };
+
+                _context.ProductCategory.Add(productCategory);
+            }
+            await _context.SaveChangesAsync();
         }
         public async Task<UpdateStatus> Update(Product product) 
         {
